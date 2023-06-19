@@ -1,0 +1,65 @@
+@import '../mixins';
+
+
+:root {
+  
+  /**
+   * Sidebar
+   * ==================================================
+   */
+  --menu-width: 12.5rem;
+  --sidebar-width: 12.5rem;
+  --menu-padding-x: 1rem;
+  --menu-padding-y: 1.25rem;
+  --menu-padding: var(--menu-padding-y) var(--menu-padding-x);
+  
+  /**
+   * Container
+   * ==================================================
+   */
+   --container-padding-y: 0.75rem;
+  --container-padding-x: 1.25rem;
+  --container-padding: var(--container-padding-y) var(--container-padding-x);
+  @include min-width($bp20) {
+    --container-padding-y: 1rem;
+    --container-padding-x: 1.6125rem;
+  }
+  @include min-width($bp30) {
+    --container-padding-y: 1.5rem;
+    --container-padding-x: 2rem;
+  }
+  @include min-width($bp50) {
+    --container-padding-y: 2rem;
+    --container-padding-x: 2.5rem;
+  }
+  @include min-width($bp75) {
+    --container-padding-y: 2.25rem;
+    --container-padding-x: 3rem;
+  }
+  
+  /**
+   * Cards
+   * ==================================================
+   */
+  --card-padding-x: 1rem;
+  --card-padding-y: 1rem;
+  --card-padding: var(--card-padding-y) var(--card-padding-x);
+  @include min-width($bp20) {
+    --card-padding-x: 1.25rem;
+    --card-padding-y: 1.25rem;
+
+  }
+  @include min-width($bp30) {
+    --card-padding-x: 1.5rem;
+    --card-padding-y: 1.5rem;
+  }
+
+  /**
+   * Misc Ui things
+   * ==================================================
+   */
+  --gap: 1rem;
+  --radius: 9px;
+  --inner-radius: 5px;
+
+}

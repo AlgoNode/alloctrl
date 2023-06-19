@@ -1,0 +1,25 @@
+//
+// Media Queries
+// =======================
+@mixin print() {
+  @media only print {
+    @content;
+  }
+}
+@mixin max-height($height){
+  @media only screen and (max-height: $height){
+    @content;
+  }
+}
+
+@mixin max-width($width){
+  @media only screen and (max-width: $width){
+    @content;
+  }
+}
+
+@mixin min-width($width){
+  @media only screen and (min-width: $width){
+    @content;
+  }
+}

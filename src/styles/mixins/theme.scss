@@ -1,0 +1,51 @@
+@use "sass:selector";
+@use "sass:string";
+@use "sass:list";
+
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  @return $string;
+}
+
+/**
+ * Dark Mode
+ * ==================================================
+ */
+@mixin dark ($noGlobal:false) {    
+  @if ($noGlobal) {
+    :root[theme="dark"] & {
+      @content;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root[theme="auto"] & {
+        @content;
+      }
+    }
+  }
+
+  @else if (selector.is-superselector(&, unquote(':root[theme]'))) {
+    @at-root #{ selector.unify(&, unquote('[theme="dark"]'))} {
+      @content;
+    }
+    @media (prefers-color-scheme: dark) {
+      @at-root #{ selector.unify(&, unquote('[theme="auto"]')) } {
+        @content;
+      }
+    }
+  }
+
+  @else {
+    :global([theme="dark"]) & {
+      @content;
+    }
+    @media (prefers-color-scheme: dark) {
+      :global([theme="auto"]) & {
+        @content;
+      }
+    }
+  }
+}
