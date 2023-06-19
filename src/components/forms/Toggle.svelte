@@ -240,6 +240,7 @@
   }
   
   .option {
+    color: var(--primary-light);
     font-size: 0.875em;
     font-family: var(--font-condensed);
     white-space: normal;
@@ -249,18 +250,11 @@
     position: relative;
     z-index: 1;
     cursor: pointer;
-    color: var(--gray-60);
-    @include dark {
-      color: var(--gray-60);
-    }
     &.hidden {
       display: none;
     }
     &.active {
       color: var(--primary-reversed);
-      @include dark {
-        color: var(--primary-reversed);
-      }
     }
     // icon only
     &.icon-only {
@@ -346,25 +340,4 @@
     }
   }
 
-  /**
-   * Themes
-   * ==================================================
-   */
-  .toggle.gray {
-    .options {
-      background: none;
-    }
-    .option.active {
-      color: var(--blue-30);
-      @include dark {
-        color: var(--blue-80);
-      }
-    }
-    .active-state {
-      background: var(--blue-90);
-      @include dark {
-        background: var(--gray-30);
-      }
-    }
-  }
 </style>

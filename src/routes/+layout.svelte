@@ -4,6 +4,7 @@
 	import { browser } from "$app/environment";
 	import __ from '$lib/locales';
 	import Profile from '$lib/profile';
+	import Header from '$components/layout/Header.svelte';
 
 
 	/**
@@ -34,9 +35,6 @@
 </script>
 
 
+
+<Header />
 <slot></slot>
-
-
-<style lang="scss">
-	
-</style>
