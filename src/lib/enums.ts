@@ -1,19 +1,20 @@
-/**
- * Settings
- * ==================================================
- */
- export enum Network {
-  MAINNET = 'mainnet',
-  TESTNET = 'testnet',
-  BETANET = 'betanet',
+
+
+
+export enum Method {
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
+  DELETE = 'delete',
+  OPTION = 'option',
 }
+
 
 
 /**
  * UI & Styles
  * ==================================================
  */
-
 export enum Theme {
   AUTO = 'auto',
   LIGHT = 'light',
