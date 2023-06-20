@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import block from './block';
+import nav from './nav';
 
 
 /**
@@ -8,7 +8,7 @@ import block from './block';
 */
 
 export const strings = {
-  block,
+  nav,
 }
 
 export default function __(key: string) {

@@ -4,7 +4,8 @@
 	import { browser } from "$app/environment";
 	import __ from '$lib/locales';
 	import Profile from '$lib/profile';
-	import Header from '$components/layout/Header.svelte';
+	import MainNav from '$components/layout/MainNav.svelte';
+	import TopBar from '$components/layout/TopBar.svelte';
 
 
 	/**
@@ -17,10 +18,6 @@
 
 	// ui theme
   $: if (browser) document.documentElement.setAttribute('theme', $userTheme);
-
-	
-
-
 
 	/*
 	 * [DEV] clear console on Hot Module Reload
@@ -35,6 +32,25 @@
 </script>
 
 
+<div class="wrapper container contained">
+	<MainNav />
+	<div class="content">
+		<TopBar />
+		<main>
+			<slot></slot>
+		</main>
+	</div>
+</div>
 
-<Header />
-<slot></slot>
+
+<style lang="scss">
+	.wrapper {
+		display: grid;
+		grid-template-columns: 16rem 1fr;
+		gap: 2rem;
+	}	
+	main {
+		margin: 2em 0;
+	}
+</style>
+
