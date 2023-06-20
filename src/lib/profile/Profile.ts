@@ -7,7 +7,7 @@ import BaseModule from "$lib/BaseModule";
 export const theme = writable(Theme.AUTO);
 
 class Profile extends BaseModule {
-  protected settingsStore = 'profile/settings';
+  protected settingsStore = 'profile';
   public theme: Writable<Theme> = theme;
   public userTheme: Writable<Theme> = writable(Theme.AUTO);
   private deviceTheme: Writable<Theme> = writable(Theme.AUTO);

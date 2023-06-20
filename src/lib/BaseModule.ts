@@ -1,9 +1,10 @@
 import type { Unsubscriber, Writable } from "svelte/store";
+import Storage from "./storage/Storage";
 
 
 
 class BaseModule {
-  protected settingsStore = 'profile';
+  protected settingsStore = 'module';
   protected subs: Unsubscriber[] = [];
   constructor() {}
 
@@ -22,23 +23,22 @@ class BaseModule {
   */
   protected async syncSettings<T>(key: string, store: Writable<T>, defaults: T): Promise<T> {
     let data = defaults;
-    const saved = await this.getProfileSetting(this.settingsStore, key);
+    const saved = await this.getProfileSetting(key);
     if (saved) data = saved;
     store.set(data);
     this.subscribe(store, async (data) => {
-      await this.setProfileSetting(this.settingsStore, key, data);
+      await this.setProfileSetting(key, data);
     })
     return data;
   }
 
 
-  private async getProfileSetting(key: string, index: number|string) {
-    return ;
-    const storage = window?.localStorage;
+  private async getProfileSetting(key: string) {
+    return Storage.getValue(this.settingsStore, key);
   }
 
-  private async setProfileSetting(store: string, index: number|string, data: any) {
-    return; 
+  private async setProfileSetting(key: string, value: any) {
+    return Storage.setValue(this.settingsStore, key, value); 
 
   }
 
