@@ -1,0 +1,35 @@
+<script lang="ts">
+  import { round } from 'lodash-es';
+  import status from '$lib/stores/status';
+</script>
+
+
+{#if $status}
+  <div class="status">
+    <span class="info">
+      Block #{ $status.lastRound } 
+    </span>
+    {#if $status.blockTime }
+      <span class="info">
+        { round($status.blockTime, 2)}s Block Time
+      </span>
+    {/if}
+  </div>
+
+{:else }
+  <div></div>
+{/if}
+
+<style lang="scss">
+  .status {
+    font-size: 0.875em;
+    font-family: var(--font-condensed);
+  }
+  .info {
+    padding-right: 1em;
+    & + .info {
+      padding-left: 1em;
+      border-left: 1px solid var(--border-color);
+    }
+  }
+</style>

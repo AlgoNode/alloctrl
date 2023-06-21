@@ -59,13 +59,13 @@
   */
   --bg-color: var(--gray-95);
   --card-bg: var(--white);
-  --border-color: var(--gray-90);
+  --border-color: var(--gray-70);
   --border-color-secondary: var(--gray-80);
    
   @include dark {
     --bg-color: var(--gray-10);
     --card-bg: var(--gray-15);
-    --border-color: var(--black);
+    --border-color: var(--gray-40);
     --border-color-secondary: var(--gray-30); 
   }
 
