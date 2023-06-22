@@ -1,5 +1,6 @@
 import { get } from 'lodash-es';
 import dashboard from './dashboard';
+import forms from './forms';
 import nav from './nav';
 import participation from './participation';
 
@@ -10,6 +11,7 @@ import participation from './participation';
 */
 export const strings = {
   dashboard,
+  forms,
   nav,
   participation,
 }

@@ -1,0 +1,31 @@
+
+
+@mixin hoverFill ($bgColor) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: var(--shadow-transparent);
+  transition: color 120ms ease,
+              box-shadow 320ms var(--ease);
+
+  &:hover {
+    box-shadow: var(--shadow-popup);
+    @content;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: $bgColor;
+    inset: 0 100% 0 0;
+    border-radius: 0 4em 4em 0;
+    transition: inset 320ms ease,
+                border-radius 320ms ease 160ms;
+  }
+  &:hover:before {
+    inset: 0 ;
+    border-radius: 0;
+  }
+  
+}

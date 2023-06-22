@@ -6,7 +6,9 @@
   import AlgodApi from "$lib/api/algod";
   import Spinner from "$components/elements/Spinner.svelte";
   import PartKey from "./PartKey.svelte";
-    import Icon from "$components/icons/Icon.svelte";
+  import Icon from "$components/icons/Icon.svelte";
+    import GlobalEvent from "$components/utils/GlobalEvent.svelte";
+    import __ from "$lib/locales";
 
   let loading: boolean = false;
   let participations: { 
@@ -14,8 +16,9 @@
     partKeys: ParticipationProps[]
   }[] = [];
 
-  onMount(init);
-  async function init() {
+  onMount(update);
+  async function update() {
+    if (loading) return;
     loading = true;
     const partKeys = await AlgodApi.private.get('/v2/participation') as ParticipationProps[];
     const groupedKeys = groupBy(partKeys, 'address');
@@ -34,17 +37,19 @@
     });
 
     participations = Object.entries(groupedKeys)
-      .map(([address, partKeys]) => ({ address, partKeys }));
+      .map(([address, partKeys]) => ({ address, partKeys }))
+      .sort((a,b) => a.address.localeCompare(b.address));
     
     loading = false;
   }
 </script>
 
 
-{#if loading }
- <Spinner />
-
-{:else }
+<div class="wrapper">
+  {#if loading }
+    <Spinner /> { __('participation.loading') }
+  {/if }
+  
   <ul class="participants">
     {#each participations as { address, partKeys } }
       <li class="participant">
@@ -65,11 +70,19 @@
     {/each}
   </ul>
 
-{/if}
+</div>  
 
+
+<GlobalEvent 
+  event="participations.refresh" 
+  callback={update}
+/>
 
 
 <style lang="scss">
+  .wrapper {
+    margin-top: 2em;
+  }
   .participant {
     margin-top: 2em;
     .icon {
