@@ -1,19 +1,26 @@
 <script lang="ts">
   import { round } from 'lodash-es';
   import status from '$lib/stores/status';
+  import Spinner from '$components/elements/Spinner.svelte';
 </script>
 
 
 {#if $status}
   <div class="status">
-    <span class="info">
-      Block #{ $status.lastRound } 
-    </span>
-    {#if $status.blockTime }
+    {#if $status.lastRound }
       <span class="info">
-        { round($status.blockTime, 2)}s Block Time
+        Block #{ $status.lastRound } 
       </span>
-    {/if}
+      {#if $status.blockTime }
+        <span class="info">
+          { round($status.blockTime, 2)}s Block Time 
+          ({round($status.averageBlockTime, 2)}s Avg)
+        </span>
+      {/if}
+        
+    {:else}
+      <Spinner />
+    {/if }
   </div>
 
 {:else }
@@ -29,7 +36,7 @@
     padding-right: 1em;
     & + .info {
       padding-left: 1em;
-      border-left: 1px solid var(--border-color);
+      border-left: 1px solid var(--border-color-secondary);
     }
   }
 </style>

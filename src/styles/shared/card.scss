@@ -1,0 +1,54 @@
+
+/** 
+ * Card
+ * ==================================================
+ */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  .card-header {
+    padding: var(--card-padding-y) var(--card-padding-x) calc(var(--card-padding-y) * 0.75);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .card-content {
+    padding: var(--card-padding);
+  }
+}
+
+
+/**
+ * Styled cards
+ * ==================================================
+ */
+
+// Message card 
+.card.message-card {
+  border-width: 2px;
+  border-color: var(--red);
+}
+
+
+.card.important {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+  }
+}
+
+.card.outline {
+  background: none;
+  border-color: var(--primary);
+}
+
+.card.ghost {
+  background: none;
+  border: none;
+  box-shadow: none;
+}

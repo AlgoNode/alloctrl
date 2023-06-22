@@ -7,13 +7,15 @@ import AlgodApi from "$lib/api/algod";
 * Component lifecycle
 * ==================================================
 */
-let lastRound: number;
+let lastRound: number|undefined;
 let blockTime: number|undefined;
 let lastTimestamp: number;
+let sampleSize: number = 0;
+let averageBlockTime: number = 3.7;
 let updateTimeout: NodeJS.Timeout;
 
 async function init() {
-  const status = await AlgodApi.private(Method.GET,'/v2/status');
+  const status = await AlgodApi.private.get('/v2/status');
   lastRound = status.lastRound;
 }
 init();
@@ -23,8 +25,9 @@ init();
  * ==================================================
  */
 const status: Readable<StatusProps> = readable({
-  lastRound: undefined,
-  blockTime: undefined,
+  lastRound,
+  blockTime,
+  averageBlockTime,
 }, start) 
 
 function start(set: SetStatusCallback) {
@@ -40,12 +43,15 @@ async function update(set: SetStatusCallback) {
     updateTimeout = setTimeout( () => update(set), 1000 );
     return;
   }
-  const status = await AlgodApi.private(Method.GET,`/v2/status/wait-for-block-after/${lastRound}`);
+  const status = await AlgodApi.private.get(`/v2/status/wait-for-block-after/${lastRound}`);
   lastRound = status.lastRound as number;
   const currentTimestamp = Date.now() - (status.timeSinceLastRound / 100_000_000);
-  if (lastTimestamp) blockTime = (currentTimestamp - lastTimestamp) / 1000;
+  if (lastTimestamp) {
+    blockTime = (currentTimestamp - lastTimestamp) / 1000;
+    averageBlockTime = ((averageBlockTime * sampleSize) + blockTime) / ++sampleSize;
+  }
   lastTimestamp = currentTimestamp;
-  set({ lastRound, blockTime });
+  set({ lastRound, blockTime, averageBlockTime });
   update(set);
 }
 

@@ -1,4 +1,3 @@
-import { compute_rest_props } from "svelte/internal";
 
 export type AmountFormatOptions = {
   abbreviate?: boolean,
@@ -9,7 +8,7 @@ export type AmountFormatOptions = {
  * ==================================================
  */
 export function formatTimestamp (timestamp: number) {
-  return new Date(timestamp * 1000).toLocaleDateString();
+  return new Date(timestamp).toLocaleDateString();
 }
 
 /**

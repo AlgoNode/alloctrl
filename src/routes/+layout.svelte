@@ -46,7 +46,7 @@
 <style lang="scss">
 	.wrapper {
 		display: grid;
-		grid-template-columns: 16rem 1fr;
+		grid-template-columns: 20% 1fr;
 		gap: 2rem;
 	}	
 	main {

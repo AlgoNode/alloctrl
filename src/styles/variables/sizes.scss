@@ -1,23 +1,12 @@
 @import '../mixins';
 
 
-:root {
-  
+:root {  
   /**
-   * Sidebar
-   * ==================================================
-   */
-  --menu-width: 12.5rem;
-  --sidebar-width: 12.5rem;
-  --menu-padding-x: 1rem;
-  --menu-padding-y: 1.25rem;
-  --menu-padding: var(--menu-padding-y) var(--menu-padding-x);
-  
-  /**
-   * Container
-   * ==================================================
-   */
-   --container-padding-y: 0.75rem;
+  * Container
+  * ==================================================
+  */
+  --container-padding-y: 0.75rem;
   --container-padding-x: 1.25rem;
   --container-padding: var(--container-padding-y) var(--container-padding-x);
   @include min-width($bp20) {
@@ -41,17 +30,17 @@
    * Cards
    * ==================================================
    */
-  --card-padding-x: 1rem;
-  --card-padding-y: 1rem;
+  --card-padding-x: 0.75rem;
+  --card-padding-y: 0.5rem;
   --card-padding: var(--card-padding-y) var(--card-padding-x);
   @include min-width($bp20) {
-    --card-padding-x: 1.25rem;
-    --card-padding-y: 1.25rem;
+    --card-padding-x: 1rem;
+    --card-padding-y: 0.75rem;
 
   }
   @include min-width($bp30) {
     --card-padding-x: 1.5rem;
-    --card-padding-y: 1.5rem;
+    --card-padding-y: 1.25rem;
   }
 
   /**
