@@ -133,4 +133,10 @@
     right: var(--card-padding-x);
     margin: -0.5em;
   }
+
+  .card-content :global {
+    .block-title {
+      margin-top: 1.25em;
+    }
+  }
 </style>

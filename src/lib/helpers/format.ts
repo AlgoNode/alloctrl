@@ -8,7 +8,7 @@ export type AmountFormatOptions = {
  * ==================================================
  */
 export function formatTimestamp (timestamp: number) {
-  return new Date(timestamp).toLocaleDateString();
+  return new Date(timestamp).toLocaleDateString('en-US');
 }
 
 /**
@@ -37,8 +37,8 @@ export function formatAssetAmount (amount: number, decimals:number = 0, options:
  * Tinify addresses (XXXXXX...XXXXXX)
  * ==================================================
  */
-export function tinifyAddress (address: string) {
-  return `${address.slice(0, 5)}…${address.slice(-5)}`
+export function tinifyAddress (address: string, amount: number = 5) {
+  return `${address.slice(0, amount)}…${address.slice(-amount)}`
 }
 
 

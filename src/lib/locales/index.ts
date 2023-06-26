@@ -4,6 +4,7 @@ import errors from './errors';
 import forms from './forms';
 import nav from './nav';
 import participation from './participation';
+import wallet from './wallet';
 
 
 /**
@@ -16,6 +17,7 @@ export const strings = {
   forms,
   nav,
   participation,
+  wallet,
 }
 
 export default function __(key: string) {

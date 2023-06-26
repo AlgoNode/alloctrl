@@ -1,14 +1,20 @@
 <script lang="ts">
   import DarkMode from "$components/elements/DarkMode.svelte";  
   import NodeStatus from "$components/elements/NodeStatus.svelte";
+    import WalletConnect from "$components/elements/WalletConnect.svelte";
   
 </script>
 
 
 
 <div class="wrapper">
-  <NodeStatus />
-  <DarkMode />
+  <div class="group">
+    <NodeStatus />
+  </div>
+  <div class="group">
+    <WalletConnect />
+    <DarkMode />
+  </div>
 </div>
 
 
@@ -19,5 +25,11 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+  }
+  .group {
+    // white-space: nowrap;
+    & > * {
+      vertical-align: middle;
+    }
   }
 </style>

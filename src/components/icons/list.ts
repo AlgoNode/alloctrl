@@ -10,6 +10,7 @@ import chevronRight from '$fa/solid/chevron-right.svg?raw';
 import moon from '$fa/solid/moon.svg?raw';
 import sun from '$fa/solid/sun.svg?raw';
 import user from '$fa/regular/user.svg?raw';
+import close from '$fa/solid/xmark.svg?raw';
 
 /**
  * Merge all imports in a single list
@@ -24,6 +25,7 @@ const list: Record<string, string> = {
   discord,
   twitter,
 
+  close,
   chevronRight,
   moon,
   sun,

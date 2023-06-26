@@ -74,8 +74,9 @@
       display: inline-block;
       font-size: 0.875em;
       font-weight: bold;
-      line-height: 1.8;
+      line-height: 1.6125;
       vertical-align: middle;
+      margin-top: 0.125em;
       min-width: 0.875em;
     }
     &.has-icon :global .text {
@@ -154,7 +155,6 @@
       border: 1px solid var(--primary);
       color: var(--primary);
       @include hoverFill(var(--primary)) {
-        // background: var(--primary);
         color: var(--text-color-reversed);
       };
     }
@@ -164,7 +164,6 @@
       border: 1px solid transparent;
       &:hover {
         border: 1px solid var(--primary);
-        // color: var(--text-color-reversed);
       }
     }
     &.gray {

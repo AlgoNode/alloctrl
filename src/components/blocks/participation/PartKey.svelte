@@ -11,6 +11,7 @@
   import Tag from "$components/elements/Tag.svelte";
   import status from "$lib/stores/status";
   import DeletePartKey from "./actions/DeletePartKey.svelte";
+    import Timestamp from "$components/elements/Timestamp.svelte";
   export let partKey: ParticipationProps;
   const {
     id,
@@ -80,8 +81,14 @@
       />
       <Prop 
         label={ __('participation.validUntil') }
-        value={ `#${ effectiveLastValid } — Approx. ${ validUntilTime ? formatTimestamp(validUntilTime) : '...' }` }
-      />
+      >
+        <svelte:fragment slot="value">
+          #{ effectiveLastValid }
+          {#if validUntilTime}
+            &emsp;Approx. <Timestamp value={ validUntilTime } />
+          {/if}
+        </svelte:fragment>
+      </Prop>
     </dl>
   </div>
 </article>

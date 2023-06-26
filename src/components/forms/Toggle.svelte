@@ -3,7 +3,7 @@
   import { Sizes, Styles } from '$lib/enums';
   import { onMount, tick, createEventDispatcher } from 'svelte';
   import Icon from '$components/icons/Icon.svelte';
-    import Error from './Error.svelte';
+  import Error from './Error.svelte';
   export let name: string = 'my.toggle';
   export let value: boolean|number|string|undefined;  
   export let label: string|undefined = undefined;

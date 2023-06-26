@@ -34,11 +34,11 @@
   * ==================================================
   */
   --primary: var(--gray-15);
-  --primary-reversed: var(--gray-80);
+  --primary-reversed: var(--gray-90);
   --primary-light: var(--gray-40);
   @include dark {
     --primary: var(--gray-95);
-    --primary-reversed: var(--gray-30);
+    --primary-reversed: var(--gray-15);
     --primary-light: var(--gray-70);
   }
   
