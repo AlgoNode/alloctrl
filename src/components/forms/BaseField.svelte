@@ -61,7 +61,7 @@
   .input-wrapper {
     display: inline-block;
     background: var(--white);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color-secondary);
     border-radius: 0.875rem;
 
     @include dark {

@@ -1,6 +1,7 @@
-import type { Payload, PostData } from "$lib/types";
+import type { Payload } from "$lib/types";
 import { PUBLIC_APP_HOST, PUBLIC_NODE_HOST } from "$env/static/public";
 import { Method } from "$lib/enums";
+import { Buffer } from 'buffer';
 import camelcaseKeys from "camelcase-keys";
 import axios from "axios";
 
@@ -11,7 +12,7 @@ export default abstract class AlgodApi {
   * FETCH PUBLIC API
   * ==================================================
   */
-  public static fetchPublic(method: Method, endpoint: string, data?: PostData): Promise<Payload> {
+  public static fetchPublic(method: Method, endpoint: string, data?: any): Promise<Payload> {
     return new Promise(async (resolve) => {
       try {
         const response = await axios({
@@ -29,10 +30,10 @@ export default abstract class AlgodApi {
   }
 
   public static public = {
-    get: (endpoint: string, data?: PostData) => this.fetchPublic(Method.GET, endpoint, data),
-    post: (endpoint: string, data?: PostData) => this.fetchPublic(Method.POST, endpoint, data),
-    put: (endpoint: string, data?: PostData) => this.fetchPublic(Method.PUT, endpoint, data),
-    delete: (endpoint: string, data?: PostData) => this.fetchPublic(Method.DELETE, endpoint, data),
+    get: (endpoint: string, data?: any) => this.fetchPublic(Method.GET, endpoint, data),
+    post: (endpoint: string, data?: any) => this.fetchPublic(Method.POST, endpoint, data),
+    put: (endpoint: string, data?: any) => this.fetchPublic(Method.PUT, endpoint, data),
+    delete: (endpoint: string, data?: any) => this.fetchPublic(Method.DELETE, endpoint, data),
   }
   
 
@@ -40,7 +41,7 @@ export default abstract class AlgodApi {
   * FETCH PRIVATE API USING LOCAL PROXY
   * ==================================================
   */
-  private static fetchPrivate(method: Method, endpoint: string, data?: PostData): Promise<Payload> {
+  private static fetchPrivate(method: Method, endpoint: string, data?: any): Promise<Payload> {
     return new Promise(async (resolve) => {
       try {
         const response = await axios({
@@ -58,10 +59,10 @@ export default abstract class AlgodApi {
   }
 
   public static private = {
-    get: (endpoint: string, data?: PostData) => this.fetchPrivate(Method.GET, endpoint, data),
-    post: (endpoint: string, data?: PostData) => this.fetchPrivate(Method.POST, endpoint, data),
-    put: (endpoint: string, data?: PostData) => this.fetchPrivate(Method.PUT, endpoint, data),
-    delete: (endpoint: string, data?: PostData) => this.fetchPrivate(Method.DELETE, endpoint, data),
+    get: (endpoint: string, data?: any) => this.fetchPrivate(Method.GET, endpoint, data),
+    post: (endpoint: string, data?: any) => this.fetchPrivate(Method.POST, endpoint, data),
+    put: (endpoint: string, data?: any) => this.fetchPrivate(Method.PUT, endpoint, data),
+    delete: (endpoint: string, data?: any) => this.fetchPrivate(Method.DELETE, endpoint, data),
   }
 
   /**

@@ -7,8 +7,8 @@
   import Spinner from "$components/elements/Spinner.svelte";
   import PartKey from "./PartKey.svelte";
   import Icon from "$components/icons/Icon.svelte";
-    import GlobalEvent from "$components/utils/GlobalEvent.svelte";
-    import __ from "$lib/locales";
+  import GlobalEvent from "$components/utils/GlobalEvent.svelte";
+  import __ from "$lib/locales";
 
   let loading: boolean = false;
   let participations: { 
@@ -26,6 +26,7 @@
     const accounts = await Promise.all(addresses.map(address => (
       AlgodApi.private.get(`/v2/accounts/${address}?exclude=all`))
     ));
+    
     accounts.forEach(account => {
       const { address, status, participation: currentKey } = account;
       const accountParticipations = groupedKeys[address];

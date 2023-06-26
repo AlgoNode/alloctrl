@@ -16,16 +16,24 @@ const proxy = async (req: RequestEvent) => {
     request: { method, body }, 
   } = req;
   try {
+    const data = typeof body === 'string' ? Buffer.from(body, 'binary') : body
     const response = await axios({
       baseURL: PUBLIC_NODE_HOST,
       method,
       url: endpoint,
-      data: body,
-      headers: { 'X-Algo-API-Token': SECRET_ALGOD_ADMIN_TOKEN },
+      data,
+      headers: { 
+        'X-Algo-API-Token': SECRET_ALGOD_ADMIN_TOKEN ,
+        ...( data instanceof ReadableStream 
+          ? { 'Content-Type': 'application/x-binary' }
+          : {} 
+        ),
+      },
     });
     return json(response?.data);
   }
   catch (e: any|AxiosError) {
+    console.log(e)
     const { response: { status, statusText }} = e;
     throw error(status, statusText);
   }
