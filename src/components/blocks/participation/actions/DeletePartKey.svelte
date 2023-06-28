@@ -30,9 +30,3 @@
   </Confirm>
 
 {/if}
-
-
-
-<style lang="scss">
-  
-</style>

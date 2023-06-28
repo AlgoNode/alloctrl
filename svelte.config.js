@@ -17,7 +17,7 @@ const config = {
 		}
 	}),
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({ out: 'build' }),
 		version: {
 			name: pkg.version,
 		},

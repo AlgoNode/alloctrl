@@ -1,9 +1,9 @@
 import type { Payload } from "$lib/types";
 import { PUBLIC_APP_HOST, PUBLIC_NODE_HOST } from "$env/static/public";
 import { Method } from "$lib/enums";
-import { Buffer } from 'buffer';
 import camelcaseKeys from "camelcase-keys";
 import axios from "axios";
+import algostack from "./algostack.public";
 
 
 export default abstract class AlgodApi {
@@ -29,12 +29,7 @@ export default abstract class AlgodApi {
     });
   }
 
-  public static public = {
-    get: (endpoint: string, data?: any) => this.fetchPublic(Method.GET, endpoint, data),
-    post: (endpoint: string, data?: any) => this.fetchPublic(Method.POST, endpoint, data),
-    put: (endpoint: string, data?: any) => this.fetchPublic(Method.PUT, endpoint, data),
-    delete: (endpoint: string, data?: any) => this.fetchPublic(Method.DELETE, endpoint, data),
-  }
+  
   
 
   /**
@@ -58,13 +53,47 @@ export default abstract class AlgodApi {
     })
   }
 
+
+
+  /**
+  * Creage, Sign and Send Transactions
+  * ==================================================
+  */
+  public static async sendTxn(params: Record<string,any>) {
+    return new Promise(async (resolve) => {
+      try {
+        const { data: txnParams } = await axios.post(`${ PUBLIC_APP_HOST }/proxy/txn/make`, params);
+        const txn = algostack.txns!.makeTxn(txnParams); 
+        const signedTxn = await algostack.txns!.signTxns( txn );
+        if (!signedTxn) return resolve( undefined );
+        const sentTxn = await axios.post(`${ PUBLIC_APP_HOST }/proxy/txn/send`, signedTxn);
+        resolve( camelcaseKeys(sentTxn?.data, { deep: true }) );
+      }
+      catch(e: any) {
+        resolve( this.handleError(e) )
+      }
+    });
+  }
+
+
+
+
+  public static public = {
+    get: (endpoint: string, data?: any) => this.fetchPublic(Method.GET, endpoint, data),
+    post: (endpoint: string, data?: any) => this.fetchPublic(Method.POST, endpoint, data),
+    put: (endpoint: string, data?: any) => this.fetchPublic(Method.PUT, endpoint, data),
+    delete: (endpoint: string, data?: any) => this.fetchPublic(Method.DELETE, endpoint, data),
+  }
   public static private = {
     get: (endpoint: string, data?: any) => this.fetchPrivate(Method.GET, endpoint, data),
     post: (endpoint: string, data?: any) => this.fetchPrivate(Method.POST, endpoint, data),
     put: (endpoint: string, data?: any) => this.fetchPrivate(Method.PUT, endpoint, data),
     delete: (endpoint: string, data?: any) => this.fetchPrivate(Method.DELETE, endpoint, data),
+    txn: (params: Record<string,any>) => this.sendTxn(params),
   }
 
+
+  
   /**
   * ERROR HANDLER
   * ==================================================

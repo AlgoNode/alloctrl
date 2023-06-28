@@ -10,7 +10,7 @@ export interface ParticipationProps {
   lastVote: number,
   key: ParticipationKeyProps,
   active?: boolean,
-  online?: boolean,
+  online: boolean,
 }
 
 export interface ParticipationKeyProps {

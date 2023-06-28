@@ -32,7 +32,7 @@
       const accountParticipations = groupedKeys[address];
       accountParticipations.forEach(accountParticipation => {
         const { key } = accountParticipation; 
-        accountParticipation.active = key.voteParticipationKey === currentKey.voteParticipationKey;
+        accountParticipation.active = key?.voteParticipationKey === currentKey?.voteParticipationKey;
         accountParticipation.online = status === 'Online' && accountParticipation.active; 
       });
     });
@@ -63,7 +63,7 @@
         <ul class="part-keys">
         {#each partKeys as partKey}
           <li class="part-key">
-            <PartKey {partKey} />
+            <PartKey { partKey } />
           </li>
         {/each}
         </ul>

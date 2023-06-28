@@ -1,6 +1,6 @@
 <script lang="ts">
   import Participations from "$components/blocks/participation/Participations.svelte";
-  import NewPartKey from "$components/blocks/participation/actions/NewPartKey.svelte";
+  // import NewPartKey from "$components/blocks/participation/actions/NewPartKey.svelte";
   import __ from "$lib/locales";
 </script>
 
@@ -19,8 +19,8 @@
 
 
 
-<style lang="scss">
+<!-- <style lang="scss">
   .actions {
     margin-top: 0.5em;
   }
-</style>
+</style> -->

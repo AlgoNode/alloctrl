@@ -1,41 +1,50 @@
 <script lang="ts">
   import type { ParticipationProps } from "$lib/api/types";
   import type { StatusProps } from "$lib/stores/types";
+  import type Profile from "$lib/profile/Profile";
   import { Sizes, Styles } from "$lib/enums";
-  import { formatTimestamp, truncateString } from "$lib/helpers/format";
-  import { onMount, onDestroy} from "svelte";
+  import { truncateString } from "$lib/helpers/format";
+  import { onMount, onDestroy, getContext} from "svelte";
   import { round } from "lodash-es";
   import __ from "$lib/locales";
-  import AlgodApi from "$lib/api/algod";
   import Prop from "$components/elements/Prop.svelte";
   import Tag from "$components/elements/Tag.svelte";
   import status from "$lib/stores/status";
   import DeletePartKey from "./actions/DeletePartKey.svelte";
-    import Timestamp from "$components/elements/Timestamp.svelte";
+  import Timestamp from "$components/elements/Timestamp.svelte";
+  import RegisterPartKey from "./actions/RegisterPartKey.svelte";
   export let partKey: ParticipationProps;
   const {
     id,
     active,
-    online,
+    address,
     effectiveFirstValid,
     effectiveLastValid,
+    online,
   } = partKey;
   let averageBlockTime: number = 3.7;
-  let validFromTime: number;
   let validUntilTime: number;
-  let validUntilStr: string;
+  let expired: boolean = false;
   
+
+  const profile: Profile = getContext('profile');
+  const { wallet } = profile
+  
+  /**
+  * Estimate expiration date
+  * ==================================================
+  */
   const unsubscribe = status.subscribe(maybeUpdate)
   onMount(update);
   onDestroy(unsubscribe);
   function maybeUpdate(status: StatusProps) {
+    if (!status.lastRound) return;
+    if (!expired && status.lastRound >= effectiveLastValid) expired = true;
     if ( round(status.averageBlockTime, 2) === averageBlockTime ) return;
     averageBlockTime = round(status.averageBlockTime, 2);
     update();
   }
   async function update() {
-    // const block = await AlgodApi.private.get(`/v2/blocks/${ effectiveFirstValid }`)
-    // console.log(block)
     if (!$status.lastRound) return;
     const roundsDiff = (effectiveLastValid - $status.lastRound);
     const timeDiff = Math.round(roundsDiff * ($status.averageBlockTime * 1000));
@@ -67,8 +76,11 @@
     </div>
 
     <div class="right actions">
-      {#if !online}
-        <DeletePartKey {partKey}/>
+      {#if $wallet.addresses?.includes(address) && !expired}
+        <RegisterPartKey { partKey } />
+      {/if}
+      {#if expired || !online }
+        <DeletePartKey { partKey }/>
       {/if}
     </div>
     
@@ -85,7 +97,9 @@
         <svelte:fragment slot="value">
           #{ effectiveLastValid }
           {#if validUntilTime}
-            &emsp;Approx. <Timestamp value={ validUntilTime } />
+            {#key validUntilTime }
+              &emsp;Approx. <Timestamp value={ validUntilTime } />
+            {/key}
           {/if}
         </svelte:fragment>
       </Prop>

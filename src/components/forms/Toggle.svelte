@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ToggleOption } from './types';
+  import type { FieldError } from '$lib/forms/types';
   import { Sizes, Styles } from '$lib/enums';
   import { onMount, tick, createEventDispatcher } from 'svelte';
   import Icon from '$components/icons/Icon.svelte';
@@ -226,7 +227,7 @@
   .options {
     padding: $wrapper-padding;
     background: var(--white);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color-secondary);
     border-radius: 10rem;
     white-space: nowrap;
     position: relative;
@@ -338,6 +339,20 @@
       width: 100%;
       text-align: center;
     }
+  }
+
+  /**
+  * Styles
+  * ==================================================
+  */
+  .toggle.outline {
+    .option.active {
+        color: var(--primary);
+      }
+      .active-state {
+        background: none;
+        border: 1px solid var(--primary);
+      }
   }
 
 </style>

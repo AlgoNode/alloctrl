@@ -5,7 +5,7 @@ import { get } from "svelte/store";
 import { writable } from "svelte/store";
 import { Theme } from "$lib/enums";
 import BaseModule from "$lib/BaseModule";
-import algostack from "$lib/api/algostack";
+import algostack from "$lib/api/algostack.public";
 
 export const theme = writable(Theme.AUTO);
 

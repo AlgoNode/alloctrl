@@ -1,7 +1,7 @@
 import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
 import type { Payload } from '$lib/types';
 import type { AxiosError } from 'axios';
-import { PUBLIC_NODE_HOST } from "$env/static/public";
+import { PUBLIC_NODE_HOST, PUBLIC_NODE_PORT } from "$env/static/public";
 import { SECRET_ALGOD_ADMIN_TOKEN } from "$env/static/private";
 import { json, error } from '@sveltejs/kit'; 
 import axios from 'axios';
@@ -15,10 +15,11 @@ const proxy = async (req: RequestEvent) => {
     params: { endpoint },
     request: { method, body }, 
   } = req;
+  if (!endpoint) throw error(404, 'Endpoint not provided');
   try {
     const data = typeof body === 'string' ? Buffer.from(body, 'binary') : body
     const response = await axios({
-      baseURL: PUBLIC_NODE_HOST,
+      baseURL: `${ PUBLIC_NODE_HOST }:${ PUBLIC_NODE_PORT }`,
       method,
       url: endpoint,
       data,

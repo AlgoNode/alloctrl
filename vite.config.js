@@ -13,6 +13,10 @@ const config = {
 			$fa: '@fortawesome/fontawesome-free/svgs',
 		},
 	},
+	
+	ssr: {
+		external: ['algostack'],
+	},
 };
 
 export default config;

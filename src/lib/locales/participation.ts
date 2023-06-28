@@ -11,14 +11,16 @@ const strings: LocaleDictionnary =  {
   // actions
   newPartKey: 'Generate new key',
   deletePartKey: 'Delete',
+  offline: 'Offline',
+  online: 'Online',
 
   // New Part Key
-  new: {
-    title: 'Generate a new participation key',
-    description: `This process can take several minutes. The list will update itself when it's done.`,
-    address: 'Address',
-    submit: 'Generate'
-  }
+  // new: {
+  //   title: 'Generate a new participation key',
+  //   description: `This process can take several minutes. The list will update itself when it's done.`,
+  //   address: 'Address',
+  //   submit: 'Generate'
+  // }
 }
 
 export default strings;

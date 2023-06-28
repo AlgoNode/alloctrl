@@ -11,7 +11,7 @@ let lastRound: number|undefined;
 let blockTime: number|undefined;
 let lastTimestamp: number;
 let sampleSize: number = 0;
-let averageBlockTime: number = 3.7;
+let averageBlockTime: number = 3.3;
 let updateTimeout: NodeJS.Timeout;
 
 async function init() {

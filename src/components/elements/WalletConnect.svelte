@@ -17,7 +17,6 @@
   const profile: Profile = getContext('profile');
   const { wallet } = profile
 
-  console.log($wallet)
   function disconnect() {
     profile.disconnect.call(profile);
   }
@@ -107,20 +106,6 @@
 
 
 <style lang="scss">
-  .wrapper {
-    min-height: 60vh;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  .blob {
-    width: 12em;
-    max-width: 50%;
-    display: inline-block;
-  }
- 
   .options {
     margin-top: 1.5em;
   }
