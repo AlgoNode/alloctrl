@@ -22,7 +22,7 @@
 {:else }
   <Confirm let:confirm >
     <Button 
-      label={ __('participations.deletePartKey') }
+      label={ __('participation.deletePartKey') }
       size={ Sizes.TINY }
       style={ Styles.OUTLINE }
       on:click={ () => confirm(deletePartKey) }

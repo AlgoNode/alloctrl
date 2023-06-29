@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ParticipationProps } from "$lib/api/types";
+  import { Styles } from "$lib/enums";
   import { TransactionType } from "algostack";
   import __ from "$lib/locales";
   import Confirm from "$components/elements/Confirm.svelte";
@@ -16,17 +17,17 @@
 
 
   function canceled() {
-    console.log('canceled');
     toggleState = partKey.online;
   }
 
   async function confirmed() {
-    console.log('confirmed');
     loading = true;
-    const txn = partKey.online ? await takeOffline() : await takeOnline();
-    partKey.online = !partKey.online;
+    const txn: any = partKey.online ? await takeOffline() : await takeOnline();
+    if (txn?.txId) {
+      partKey.online = !partKey.online;
+      dispatchEvent(new Event('participations.refresh'));
+    } 
     toggleState = partKey.online;
-    dispatchEvent(new Event('participations.refresh'));
     loading = false;
   }
 
@@ -68,17 +69,19 @@
   title={ partKey.online ? __('participation.offline.confirmTitle') : __('participation.online.confirmTitle') }
   description={ partKey.online ? __('participation.offline.confirm') : __('participation.online.confirm') }
 >
-
-  <Toggle
-    name={`togglePartkey.${ id }`}
-    isBoolean={ false }
-    bind:value={ toggleState }
-    on:change={ confirm }
-    options={[
-      {  value: false, label: !partKey.online ? __('participation.offline.status') : __('participation.offline.action') },
-      {  value: true, label: partKey.online ? __('participation.online.status') : __('participation.online.action') },
-    ]} 
-  />
+  <div class="wrapper" class:disabled={ loading } >
+    <Toggle
+      name={`togglePartkey.${ id }`}
+      isBoolean={ false }
+      bind:value={ toggleState }
+      on:change={ confirm }
+      style={ partKey.online ? Styles.PRIMARY : Styles.GRAY }
+      options={[
+        {  value: false, label: !partKey.online ? __('participation.offline.status') : __('participation.offline.action') },
+        {  value: true, label: partKey.online ? __('participation.online.status') : __('participation.online.action') },
+      ]} 
+    />
+  </div>
 </Confirm>
 
 

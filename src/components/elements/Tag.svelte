@@ -63,7 +63,7 @@
     }
     &.gray {
       color: var(--gray-50);
-      background: var(--blue-90);
+      background: var(--gray-90);
       @include dark {
         color: var(--gray-80);
         background: var(--gray-30);

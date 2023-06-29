@@ -357,4 +357,14 @@
       }
   }
 
+  .toggle.gray {
+    .option.active {
+        color: var(--primary);
+      }
+      .active-state {
+        background: var(--bg-color);
+        border: 1px solid var(--border-color);
+      }
+  }
+
 </style>

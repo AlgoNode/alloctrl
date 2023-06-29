@@ -6,6 +6,7 @@ const strings: LocaleDictionnary =  {
   intro: `Get your participation keys online/offline easily by connecting your web or mobile wallet.`,
   connect: 'Connect Wallet',
   connected: 'Connected',
+  connectedWith: 'Connected with',
   disconnect: 'Disconnect',
   providers: {
     [Connector.PERA]: 'Pera',

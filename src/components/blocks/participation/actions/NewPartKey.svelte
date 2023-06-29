@@ -49,7 +49,7 @@
   </svelte:fragment>
 
   <svelte:fragment slot="content">
-    <h3 class="block-title">
+    <h3 class="popup-title">
       { __('participation.new.title') }
     </h3>
     <p class="text">

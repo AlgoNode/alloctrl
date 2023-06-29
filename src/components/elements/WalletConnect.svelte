@@ -4,6 +4,7 @@
   import { Sizes, Styles } from "$lib/enums";
   import { tinifyAddress } from "$lib/helpers/format";
   import { getContext } from "svelte";
+  import { upperFirst } from "lodash-es";
   import __ from "$lib/locales";
   import Button from "$components/elements/Button.svelte";
   import Popup from "./Popup.svelte";
@@ -28,7 +29,7 @@
   <svelte:fragment slot="trigger" let:open >
     <Button 
       label={  $wallet.addresses?.length
-        ? __('wallet.connected')
+        ? `${__('wallet.connectedWith')} ${ upperFirst($wallet.connector) }`
         : __('wallet.connect') 
       }
       on:click={ open }
@@ -74,7 +75,7 @@
     {:else if $wallet.addresses.length }
       <div class="select-account">
         <h3 class="title popup-title">
-          { __('wallet.connected')}
+          { __('wallet.connected')} 
         </h3>
       
         <ul class="addresses">

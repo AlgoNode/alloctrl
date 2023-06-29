@@ -28,6 +28,7 @@ const strings: LocaleDictionnary =  {
   deletePartKey: 'Delete',
   
   // Status
+  expiresSoon: 'Expires Soon!',
   expired: 'Expired',
 
   online: {

@@ -20,13 +20,16 @@
     id,
     address,
     effectiveFirstValid,
-    effectiveLastValid,
+    key: {
+      voteFirstValid,
+      voteLastValid,
+    }
   } = partKey;
-  let averageBlockTime: number = 3.7;
+  let averageBlockTime: number = 3.38; // average block time
   let validUntilTime: number;
   let expired: boolean = false;
   let loading: boolean = false;
-  
+  const expireSoonTreshold = Math.round( 7 * 24 * 60 * 60 / averageBlockTime ); 
 
   const profile: Profile = getContext('profile');
   const { wallet } = profile
@@ -40,14 +43,14 @@
   onDestroy(unsubscribe);
   function maybeUpdate(status: StatusProps) {
     if (!status.lastRound) return;
-    if (!expired && status.lastRound >= effectiveLastValid) expired = true;
+    if (!expired && status.lastRound >= voteLastValid) expired = true;
     if ( round(status.averageBlockTime, 2) === averageBlockTime ) return;
     averageBlockTime = round(status.averageBlockTime, 2);
     update();
   }
   async function update() {
     if (!$status.lastRound) return;
-    const roundsDiff = (effectiveLastValid - $status.lastRound);
+    const roundsDiff = (voteLastValid - $status.lastRound);
     const timeDiff = Math.round(roundsDiff * ($status.averageBlockTime * 1000));
     validUntilTime = Date.now() + timeDiff;
   }
@@ -59,18 +62,27 @@
       <h3 class="card-title">
         { __('participation.id') }: { truncateString(id) }
       </h3>
-      <div class="tags">
+      <div class="tags">     
+
+        {#if $status.lastRound && $status.lastRound > voteLastValid }
+          <Tag 
+            label={ __('participation.expired') }
+            style={ Styles.OUTLINE }
+            size={ Sizes.TINY } 
+          />
+        {:else if $status.lastRound && voteLastValid - $status.lastRound < expireSoonTreshold  }
+          <Tag 
+            label={ __('participation.expiresSoon') }
+            style={ Styles.PRIMARY }
+            size={ Sizes.TINY } 
+          />
+          
+        {/if}
+
         {#if partKey.online}
           <Tag 
             label={ __('participation.online.status') }
             style={ Styles.GRAY }
-            size={ Sizes.TINY } 
-          />
-        {/if}
-        {#if $status.lastRound && $status.lastRound > effectiveLastValid }
-          <Tag 
-            label={ __('participation.expired') }
-            style={ Styles.OUTLINE }
             size={ Sizes.TINY } 
           />
         {/if}
@@ -82,7 +94,7 @@
         <Spinner />
       {/if}
 
-      {#if expired || !partKey.online }
+      {#if !loading && (expired || !partKey.online) }
         <div class="action">
           <DeletePartKey { partKey }/>
         </div>
@@ -101,14 +113,14 @@
     <dl class="grid" >
       <Prop 
         label={ __('participation.validFrom') }
-        value={ effectiveFirstValid }
+        value={ voteFirstValid }
         type={ PropType.BLOCK }
       />
       <Prop 
         label={ __('participation.validUntil') }
       >
         <svelte:fragment slot="value">
-          #{ effectiveLastValid }
+          #{ voteLastValid }
           {#if validUntilTime}
             {#key validUntilTime }
               &emsp;Approx. <Timestamp value={ validUntilTime } />
