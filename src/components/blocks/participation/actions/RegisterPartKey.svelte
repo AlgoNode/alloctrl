@@ -12,14 +12,22 @@
   
   const { id, address, key } = partKey;
   let toggleState: boolean = partKey.online || false;
-  // $: toggleState = partKey.online;
 
-
-
-  function canceled() {
+  /**
+  * Sync online state 
+  * between partkey and local component
+  * ==================================================
+  */
+  $: partKey.online, syncPartKey();
+  function syncPartKey() {
+    if (toggleState === partKey.online) return; 
     toggleState = partKey.online;
   }
 
+  /**
+  * Confirm / Cancel
+  * ==================================================
+  */
   async function confirmed() {
     loading = true;
     const txn: any = partKey.online ? await takeOffline() : await takeOnline();
@@ -27,10 +35,16 @@
       partKey.online = !partKey.online;
       dispatchEvent(new Event('participations.refresh'));
     } 
-    toggleState = partKey.online;
     loading = false;
   }
+  function canceled() {
+    toggleState = partKey.online;
+  }
 
+  /**
+  * Online / Offline transactions
+  * ==================================================
+  */
   async function takeOnline() {
     const txn = await AlgodApi.private.txn({
       type: TransactionType.keyreg,
@@ -44,7 +58,6 @@
     });
     return txn;
   }
-
   async function takeOffline() {
     const txn = await AlgodApi.private.txn({
       type: TransactionType.keyreg,
@@ -58,6 +71,7 @@
     });
     return txn
   }
+
 
 </script>
 
@@ -84,7 +98,3 @@
   </div>
 </Confirm>
 
-
-<style lang="scss">
-  
-</style>

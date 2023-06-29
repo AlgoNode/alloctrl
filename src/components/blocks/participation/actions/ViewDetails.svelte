@@ -7,7 +7,6 @@
   import __ from "$lib/locales";
   import PropsList from "$components/elements/PropsList.svelte";
   export let partKey: ParticipationProps;
-  console.log(partKey)
 </script>
 
 

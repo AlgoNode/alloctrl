@@ -29,12 +29,14 @@
     
     accounts.forEach(account => {
       const { address, status, participation: currentKey } = account;
-      const accountParticipations = groupedKeys[address];
-      accountParticipations.forEach(accountParticipation => {
-        const { key } = accountParticipation; 
-        accountParticipation.active = key?.voteParticipationKey === currentKey?.voteParticipationKey;
-        accountParticipation.online = status === 'Online' && accountParticipation.active; 
-      });
+      const accountPartKeys = groupedKeys[address];
+      accountPartKeys
+        .sort((a,b) => a.id.localeCompare(b.id))
+        .forEach(accountPartKey => {
+          const { key } = accountPartKey; 
+          accountPartKey.active = key?.voteParticipationKey === currentKey?.voteParticipationKey;
+          accountPartKey.online = status === 'Online' && accountPartKey.active; 
+        });
     });
 
     participations = Object.entries(groupedKeys)
@@ -52,7 +54,7 @@
   {/if }
   
   <ul class="participants">
-    {#each participations as { address, partKeys } }
+    {#each participations as { address, partKeys } (address)}
       <li class="participant">
         <h2 class="block-title">
           <span class="icon">
@@ -61,7 +63,7 @@
           { tinifyAddress(address) }
         </h2>
         <ul class="part-keys">
-        {#each partKeys as partKey}
+        {#each partKeys as partKey (partKey.id) }
           <li class="part-key">
             <PartKey { partKey } />
           </li>
@@ -76,7 +78,7 @@
 
 <GlobalEvent 
   event="participations.refresh" 
-  callback={update}
+  callback={ update }
 />
 
 
