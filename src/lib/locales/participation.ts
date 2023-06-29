@@ -11,8 +11,18 @@ const strings: LocaleDictionnary =  {
   // actions
   newPartKey: 'Generate new key',
   deletePartKey: 'Delete',
-  offline: 'Offline',
-  online: 'Online',
+  online: {
+    status: 'Online',
+    action: 'Take Online',
+    confirmTitle: 'Take key online?',
+    confirm: `This will take the participation keys online. The account will start participating in consensus. The participation key can be taken offline anytime.`, 
+  },
+  offline: {
+    status: 'Offline',
+    action: 'Take Offline',
+    confirmTitle: 'Take key offline?',
+    confirm: `This will take the participation keys offline. The account will no longer participate in consensus. The participation key can be brought back online anytime, as long as it is not expired.`, 
+  },
 
   // New Part Key
   // new: {

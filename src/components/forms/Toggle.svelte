@@ -20,7 +20,7 @@
   ];
   
   const dispatch = createEventDispatcher();
-  const clickableWrapper: boolean = options.length === 2;
+  const clickableWrapper: boolean = options.length === 2 && isBoolean;
 
   /**
    * Boolean toggles
@@ -48,6 +48,7 @@
   $: value, setActiveEl();
   $: wrapperWidth, setActiveEl();
   $: wrapperHeight, setActiveEl();
+  $: options, setActiveEl();
 
   async function setActiveEl() {
     await tick();
@@ -256,6 +257,7 @@
     }
     &.active {
       color: var(--primary-reversed);
+      cursor: default
     }
     // icon only
     &.icon-only {

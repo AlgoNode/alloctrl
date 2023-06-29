@@ -5,8 +5,9 @@
   import { Sizes, Styles } from "$lib/enums";
   import { truncateString } from "$lib/helpers/format";
   import { onMount, onDestroy, getContext} from "svelte";
-  import { round } from "lodash-es";
+  import { divide, round } from "lodash-es";
   import __ from "$lib/locales";
+  import AlgodApi from "$lib/api/algod";
   import Prop from "$components/elements/Prop.svelte";
   import Tag from "$components/elements/Tag.svelte";
   import status from "$lib/stores/status";
@@ -20,7 +21,6 @@
     address,
     effectiveFirstValid,
     effectiveLastValid,
-    online,
   } = partKey;
   let averageBlockTime: number = 3.7;
   let validUntilTime: number;
@@ -62,6 +62,7 @@
         {#if active}
           <Tag 
             label={ __('participation.active') }
+            style={ Styles.GRAY }
             size={ Sizes.TINY } 
           />
         {/if}
@@ -76,12 +77,17 @@
     </div>
 
     <div class="right actions">
+      {#if expired || !partKey.online }
+        <div class="action">
+          <DeletePartKey { partKey }/>
+        </div>
+      {/if}
       {#if $wallet.addresses?.includes(address) && !expired}
-        <RegisterPartKey { partKey } />
+        <div class="action register">
+          <RegisterPartKey bind:partKey />
+        </div>
       {/if}
-      {#if expired || !online }
-        <DeletePartKey { partKey }/>
-      {/if}
+      
     </div>
     
   </header>
@@ -122,8 +128,16 @@
     display: grid;
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-auto-flow: column;
+    // grid-template-rows: repeat(2, 1fr);
+    // grid-auto-flow: column;
     gap: var(--gap);
+  }
+  .action {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.5em;
+    &.register {
+      margin: -0.5em 0 -0.5em 0.5em;
+    }
   }
 </style>
