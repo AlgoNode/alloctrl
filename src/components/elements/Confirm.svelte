@@ -41,7 +41,7 @@
   on:close={ popupClosed }
 >
   <svelte:fragment slot="content">
-    <h3 class="block-title">
+    <h3 class="popup-title">
       { title }
     </h3>
     {#if description}

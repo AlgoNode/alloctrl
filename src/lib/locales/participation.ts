@@ -3,14 +3,33 @@ import type { LocaleDictionnary } from "$lib/types";
 const strings: LocaleDictionnary =  {
   title: 'Participation Keys',
   loading: 'Getting participation keys...',
-  active: 'Online',
-  expired: 'Expired',
-  validFrom: 'Valid from',
-  validUntil: 'Valid until',
+  id: 'Key ID',
+  
+  
+  about: 'About',
+  account: 'Account',
+  validFrom: 'Valid From',
+  validUntil: 'Valid Until',
+  lastVote: 'Last block voted on',
+  lastProposal: 'Last block proposed',
+
+  details: 'Details',
+  voteFirstValid: 'First Round',
+  voteLastValid: 'Last Round',
+  voteKeyDilution: 'Key Dilution',
+  selectionParticipationKey: 'Selection Key',
+  voteParticipationKey: 'Voting Key',
+  stateProofKey: 'State Proof Key',
+
 
   // actions
+  viewDetails: 'View details',
   newPartKey: 'Generate new key',
   deletePartKey: 'Delete',
+  
+  // Status
+  expired: 'Expired',
+
   online: {
     status: 'Online',
     action: 'Take Online',

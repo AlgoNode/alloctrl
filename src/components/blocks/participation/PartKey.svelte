@@ -2,22 +2,22 @@
   import type { ParticipationProps } from "$lib/api/types";
   import type { StatusProps } from "$lib/stores/types";
   import type Profile from "$lib/profile/Profile";
-  import { Sizes, Styles } from "$lib/enums";
+  import { PropType, Sizes, Styles } from "$lib/enums";
   import { truncateString } from "$lib/helpers/format";
   import { onMount, onDestroy, getContext} from "svelte";
-  import { divide, round } from "lodash-es";
+  import { round } from "lodash-es";
   import __ from "$lib/locales";
-  import AlgodApi from "$lib/api/algod";
   import Prop from "$components/elements/Prop.svelte";
   import Tag from "$components/elements/Tag.svelte";
   import status from "$lib/stores/status";
   import DeletePartKey from "./actions/DeletePartKey.svelte";
   import Timestamp from "$components/elements/Timestamp.svelte";
   import RegisterPartKey from "./actions/RegisterPartKey.svelte";
+  import ViewDetails from "./actions/ViewDetails.svelte";
+  import Spinner from "$components/elements/Spinner.svelte";
   export let partKey: ParticipationProps;
   const {
     id,
-    active,
     address,
     effectiveFirstValid,
     effectiveLastValid,
@@ -25,6 +25,7 @@
   let averageBlockTime: number = 3.7;
   let validUntilTime: number;
   let expired: boolean = false;
+  let loading: boolean = false;
   
 
   const profile: Profile = getContext('profile');
@@ -56,12 +57,12 @@
   <header class="card-header">
     <div class="left">
       <h3 class="card-title">
-        ID: { truncateString(id) }
+        { __('participation.id') }: { truncateString(id) }
       </h3>
       <div class="tags">
-        {#if active}
+        {#if partKey.online}
           <Tag 
-            label={ __('participation.active') }
+            label={ __('participation.online.status') }
             style={ Styles.GRAY }
             size={ Sizes.TINY } 
           />
@@ -77,14 +78,19 @@
     </div>
 
     <div class="right actions">
+      {#if loading }
+        <Spinner />
+      {/if}
+
       {#if expired || !partKey.online }
         <div class="action">
           <DeletePartKey { partKey }/>
         </div>
       {/if}
+
       {#if $wallet.addresses?.includes(address) && !expired}
         <div class="action register">
-          <RegisterPartKey bind:partKey />
+          <RegisterPartKey bind:partKey bind:loading />
         </div>
       {/if}
       
@@ -96,6 +102,7 @@
       <Prop 
         label={ __('participation.validFrom') }
         value={ effectiveFirstValid }
+        type={ PropType.BLOCK }
       />
       <Prop 
         label={ __('participation.validUntil') }
@@ -109,6 +116,9 @@
           {/if}
         </svelte:fragment>
       </Prop>
+      <div class="view-more">
+        <ViewDetails {partKey} />
+      </div>
     </dl>
   </div>
 </article>
@@ -127,10 +137,11 @@
   .grid { 
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(3, 1fr);
-    // grid-template-rows: repeat(2, 1fr);
-    // grid-auto-flow: column;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--gap);
+    @include min-width($bp50) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   .action {
     display: inline-block;
@@ -138,6 +149,11 @@
     margin-left: 0.5em;
     &.register {
       margin: -0.5em 0 -0.5em 0.5em;
+    }
+  }
+  .view-more {
+    @include min-width($bp50) {
+      text-align: right;
     }
   }
 </style>

@@ -57,7 +57,8 @@ body {
 }
 
 %block-title,
-.block-title {
+.block-title,
+.popup-title {
   @extend %title;
   color: var(--primary);
   font-size: 1.125rem;
@@ -69,6 +70,7 @@ body {
 }
 
 %card-title,
+.list-title,
 .card-title {
   color: var(--text-color-medium);
   font-family: var(--font-regular);
@@ -169,20 +171,12 @@ body {
     left: 0;
     width: 100%;
     border-bottom: 1px dotted currentColor;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(0.125em);
-    transition: transform 180ms var(--ease),
-                opacity 120ms var(--ease) 60ms,
-                visibility 180ms linear 180ms;
+   
   }
   &:hover {
     color: var(--link-color-hover);
     &:after {
-      transform: translateY(0);
-      visibility: visible;
-      opacity: 1;
-      transition-delay: 0ms;
+      border-bottom: 1px solid currentColor;
     }
   }
 }

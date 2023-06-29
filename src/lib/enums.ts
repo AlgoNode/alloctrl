@@ -8,6 +8,11 @@ export enum Method {
   DELETE = 'delete',
 }
 
+export enum PropType {
+  BLOCK = 'block',
+  ADDRESS = 'address',
+}
+
 
 
 /**

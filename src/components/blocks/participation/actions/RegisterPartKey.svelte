@@ -1,10 +1,8 @@
 <script lang="ts">
   import type { ParticipationProps } from "$lib/api/types";
-  import { Sizes, Styles } from "$lib/enums";
   import { TransactionType } from "algostack";
   import __ from "$lib/locales";
   import Confirm from "$components/elements/Confirm.svelte";
-  import Spinner from "$components/elements/Spinner.svelte";
   import Toggle from "$components/forms/Toggle.svelte";
   import AlgodApi from "$lib/api/algod";
 
@@ -28,7 +26,7 @@
     const txn = partKey.online ? await takeOffline() : await takeOnline();
     partKey.online = !partKey.online;
     toggleState = partKey.online;
-    dispatchEvent(new Event('participation.refresh'));
+    dispatchEvent(new Event('participations.refresh'));
     loading = false;
   }
 

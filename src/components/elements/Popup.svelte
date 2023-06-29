@@ -100,6 +100,7 @@
     z-index: 100;
     overflow: auto;
     backdrop-filter: blur(2px);
+    text-align: initial;
   }
   .inner-wrapper {
     min-height: 100%;
@@ -135,7 +136,7 @@
   }
 
   .card-content :global {
-    .block-title {
+    .popup-title {
       margin-top: 1.25em;
     }
   }

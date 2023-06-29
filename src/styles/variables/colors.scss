@@ -35,11 +35,11 @@
   */
   --primary: var(--gray-15);
   --primary-reversed: var(--gray-90);
-  --primary-light: var(--gray-40);
+  --primary-light: var(--gray-15);
   @include dark {
     --primary: var(--gray-95);
     --primary-reversed: var(--gray-15);
-    --primary-light: var(--gray-70);
+    --primary-light: var(--gray-95);
   }
   
   /**

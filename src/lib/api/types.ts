@@ -14,10 +14,10 @@ export interface ParticipationProps {
 }
 
 export interface ParticipationKeyProps {
-  selectionParticipationKey: string,
-  stateProofKey: string,
   voteFirstValid: number,
-  voteKeyDilution: number,
   voteLastValid: number,
+  voteKeyDilution: number,
+  selectionParticipationKey: string,
   voteParticipationKey: string,
+  stateProofKey: string,
 }

@@ -43,7 +43,7 @@
     --------------------------------------- -->
     {#if !$wallet.addresses?.length }
       <div class="connect-wallet">
-        <h2 class="title block-title">
+        <h2 class="title popup-title">
           { __('wallet.title') }
         </h2>
     
@@ -73,7 +73,7 @@
     --------------------------------------- -->
     {:else if $wallet.addresses.length }
       <div class="select-account">
-        <h3 class="title block-title">
+        <h3 class="title popup-title">
           { __('wallet.connected')}
         </h3>
       
