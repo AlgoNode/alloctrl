@@ -29,6 +29,7 @@
   * ==================================================
   */
   async function confirmed() {
+    if (loading) return;
     loading = true;
     const txn: any = partKey.online ? await takeOffline() : await takeOnline();
     if (txn?.txId) {

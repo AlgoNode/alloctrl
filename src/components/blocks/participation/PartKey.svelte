@@ -15,6 +15,7 @@
   import RegisterPartKey from "./actions/RegisterPartKey.svelte";
   import ViewDetails from "./actions/ViewDetails.svelte";
   import Spinner from "$components/elements/Spinner.svelte";
+    import { scale } from "svelte/transition";
   export let partKey: ParticipationProps;
   const {
     id,
@@ -56,7 +57,7 @@
   }
 </script>
 
-<article class="card">
+<article class="card" out:scale={{ duration: 480, opacity: 0, start: 0.9 }}>
   <header class="card-header">
     <div class="left">
       <h3 class="card-title">
@@ -96,7 +97,7 @@
 
       {#if !loading && (expired || !partKey.online) }
         <div class="action">
-          <DeletePartKey { partKey }/>
+          <DeletePartKey { partKey } bind:loading/>
         </div>
       {/if}
 
