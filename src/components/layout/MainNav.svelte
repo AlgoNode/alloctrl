@@ -21,12 +21,6 @@
       </li>
       <li>
         <NavLink 
-          label={ __('nav.stats') }
-          href='/stats'
-        />
-      </li>
-      <li>
-        <NavLink 
           label={ __('nav.participationKeys') }
           href='/participation-keys'
         />

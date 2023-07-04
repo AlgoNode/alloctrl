@@ -9,10 +9,11 @@
   import Button from "$components/elements/Button.svelte";
   import Popup from "./Popup.svelte";
   import Icon from "$components/icons/Icon.svelte";
+    import CopyToClipboard from "./CopyToClipboard.svelte";
 
   interface Wallet { slug: Connector, icon: string }
   const wallets: Wallet[] = [
-    { slug: Connector.PERA, icon: 'pera' },
+    // { slug: Connector.PERA, icon: 'pera' },
     { slug: Connector.DEFLY, icon: 'defly' },
   ];
   const profile: Profile = getContext('profile');
@@ -81,10 +82,12 @@
         <ul class="addresses">
           {#each $wallet.addresses as address}
             <li class="address">
-              <span class="icon">
-                <Icon name="user" />
-              </span>
-              { tinifyAddress( address, 8 ) }
+              <CopyToClipboard content={ address } fullWidth >
+                <span class="icon">
+                  <Icon name="user" />
+                </span>
+                { tinifyAddress( address, 8 ) }
+              </CopyToClipboard>
             </li>
           {/each}
         </ul>

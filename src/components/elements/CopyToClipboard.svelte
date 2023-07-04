@@ -3,6 +3,7 @@
   import __ from "$lib/locales";
   export let content: string;
   export let clickable: boolean = true;
+  export let fullWidth: boolean = false;
 
   async function copy () {
     try {
@@ -18,6 +19,7 @@
 <span
   class="wrapper"
   class:show-icon={ clickable } 
+  class:full-width={ fullWidth }
   on:click={ clickable ? copy : undefined } 
   on:keydown
 >
@@ -35,6 +37,9 @@
     display: inline-block;
     position: relative;
     max-width: 100%;
+    &.full-width {
+      width: 100%;
+    }
   }
   .icon {
     font-size: 0.75em;
