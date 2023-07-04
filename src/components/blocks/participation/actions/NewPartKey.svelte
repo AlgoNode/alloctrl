@@ -9,7 +9,7 @@
   import Text from "$components/forms/Text.svelte";
   import status from "$lib/stores/status";
   import Select from "$components/forms/Select.svelte";
-    import CopyToClipboard from "$components/elements/CopyToClipboard.svelte";
+  import CopyToClipboard from "$components/elements/CopyToClipboard.svelte";
   
   const profile: Profile = getContext('profile');
   const { wallet } = profile
@@ -69,7 +69,7 @@
 
 
 
-<Popup small active>
+<Popup small >
   <svelte:fragment slot="trigger" let:open >
     <Button 
       label={ __('participation.newPartKey') }
