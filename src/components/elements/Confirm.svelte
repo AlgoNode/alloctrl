@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { MaybePromise } from "@sveltejs/kit";
-  import { Styles } from "$lib/enums";
+  import { Sizes, Styles } from "$lib/enums";
   import { createEventDispatcher } from "svelte";
   import __ from "$lib/locales";
   import Popup from "./Popup.svelte";
@@ -36,9 +36,9 @@
 <slot {confirm}></slot>
 
 <Popup 
-  small 
   bind:active 
   on:close={ popupClosed }
+  size={ Sizes.SMALL } 
 >
   <svelte:fragment slot="content">
     <h3 class="popup-title">

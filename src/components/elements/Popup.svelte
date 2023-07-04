@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Styles } from "$lib/enums";
+  import { Sizes, Styles } from "$lib/enums";
   import { fly, fade } from "svelte/transition";
   import { createEventDispatcher, onMount } from "svelte";
   import Keypress from "$components/utils/Keypress.svelte";
@@ -8,7 +8,7 @@
   import GlobalEvent from "$components/utils/GlobalEvent.svelte";
   
   export let active: boolean = false;
-  export let small: boolean = false;
+  export let size: Sizes = Sizes.REGULAR;
   export let openOnMount: boolean = false;
 
   onMount(() => {
@@ -42,8 +42,9 @@
   <div class="popup">
     <div 
       class="inner-wrapper container" 
-      class:contained={ !small }
-      class:contained-small={ small }
+      class:contained={ size === Sizes.LARGE }
+      class:contained-medium={ size === Sizes.REGULAR }
+      class:contained-small={ size === Sizes.SMALL }
     >
       <section 
         class="card" 

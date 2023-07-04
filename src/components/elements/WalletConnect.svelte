@@ -26,7 +26,7 @@
 </script>
 
 
-<Popup small>
+<Popup size={ Sizes.SMALL }>
   <svelte:fragment slot="trigger" let:open >
     <Button 
       label={  $wallet.addresses?.length
