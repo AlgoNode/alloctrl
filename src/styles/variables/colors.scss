@@ -35,11 +35,11 @@
   */
   --primary: var(--gray-15);
   --primary-reversed: var(--gray-90);
-  --primary-light: var(--gray-15);
+  --primary-light: var(--gray-40);
   @include dark {
     --primary: var(--gray-95);
     --primary-reversed: var(--gray-15);
-    --primary-light: var(--gray-95);
+    --primary-light: var(--gray-60);
   }
   
   /**
@@ -48,8 +48,8 @@
    */
   --text-color: var(--primary);
   --text-color-reversed: var(--primary-reversed);
-  --link-color: var(--primary-light);
-  --link-color-hover: var(--primary-light);
+  --link-color: var(--primary);
+  --link-color-hover: var(--primary);
   
 
 
@@ -59,14 +59,14 @@
   */
   --bg-color: var(--gray-95);
   --card-bg: var(--white);
-  --border-color: var(--gray-90);
-  --border-color-secondary: var(--gray-80);
+  --border-color-secondary: var(--gray-90);
+  --border-color: var(--gray-80);
    
   @include dark {
     --bg-color: var(--gray-10);
     --card-bg: var(--gray-15);
-    --border-color: var(--gray-20);
-    --border-color-secondary: var(--gray-30); 
+    --border-color-secondary: var(--gray-20);
+    --border-color: var(--gray-30); 
   }
 
 }

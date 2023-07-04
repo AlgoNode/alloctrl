@@ -5,6 +5,7 @@
   export let name: string = 'my.toggle';
   export let value: FieldValue;
   export let label: string|undefined = undefined;
+  export let info: string|undefined = undefined;
   export let error: FieldError|undefined = undefined;
   export let style: Styles = Styles.PRIMARY;
   export let disabled: boolean = false;
@@ -13,6 +14,7 @@
 
 <BaseField
   { label }
+  { info }
   { name }
   { style }
   { value }

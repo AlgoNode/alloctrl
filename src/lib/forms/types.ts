@@ -1,7 +1,7 @@
 import type { ErrorCode, FieldType } from "./enums";
 
 export type FieldName = string;
-export type FieldValue = string|number|boolean;
+export type FieldValue = string|number|boolean|undefined;
 export type FieldValidation = (value: FieldValue) => boolean|FieldError;
 export interface FieldProps {
   type: FieldType,

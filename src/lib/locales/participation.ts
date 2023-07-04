@@ -24,7 +24,7 @@ const strings: LocaleDictionnary =  {
 
   // actions
   viewDetails: 'View details',
-  newPartKey: 'Generate new key',
+  newPartKey: 'New Participation Key',
   deletePartKey: 'Delete',
   
   // Status
@@ -45,12 +45,39 @@ const strings: LocaleDictionnary =  {
   },
 
   // New Part Key
-  // new: {
-  //   title: 'Generate a new participation key',
-  //   description: `This process can take several minutes. The list will update itself when it's done.`,
-  //   address: 'Address',
-  //   submit: 'Generate'
-  // }
+  new: {
+    title: 'Generate a new participation key',
+    description: `This tool generates a command you can copy/paste in your terminal 
+      to start generating new participation keys. Just tweak the values here to your convenience.`,
+    
+    code: {
+      title: 'Your Command',
+      description: `Paste this command in your terminal to generate your participation keys.`,
+    },
+
+    address: {
+      label: 'Address',
+      info: 'Account to associate with the generated partkey',
+      other: 'Other address...',
+    },
+
+    firstValid: {
+      label: 'First Valid Round',
+      info: 'The first round for which the generated partkey will be valid',
+    },
+    lastValid: {
+      label: 'Last Valid Round',
+      info: 'The last round for which the generated partkey will be valid',
+    },
+    duration: {
+      label: 'Key Duration',
+      info: 'Duration (rounds) for which the partkey will be valid'
+    },
+    dilution: {
+      label: 'Key Diluion',
+      info: 'Key dilution for two-level participation keys (defaults to sqrt of validity window)',
+    },
+  }
 }
 
 export default strings;

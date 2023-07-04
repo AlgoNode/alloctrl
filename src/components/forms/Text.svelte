@@ -5,6 +5,7 @@
   export let name: string = 'my.field';
   export let value: FieldValue;
   export let label: string|undefined = undefined;
+  export let info: string|undefined = undefined;
   export let error: FieldError|undefined = undefined;
   export let icon: string|undefined = undefined;
   export let style: Styles = Styles.PRIMARY;
@@ -14,6 +15,7 @@
 
 <BaseField
   { label }
+  { info }
   { name }
   { icon }
   { style }
@@ -28,6 +30,7 @@
     class:has-icon={ !!icon }
     id={ name }
     bind:value
+    on:change
     { name }
     { disabled }
     { ...$$restProps }

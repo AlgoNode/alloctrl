@@ -1,6 +1,6 @@
 <script lang="ts">
   import Participations from "$components/blocks/participation/Participations.svelte";
-  // import NewPartKey from "$components/blocks/participation/actions/NewPartKey.svelte";
+  import NewPartKey from "$components/blocks/participation/actions/NewPartKey.svelte";
   import __ from "$lib/locales";
 </script>
 
@@ -10,17 +10,15 @@
   </h1>
 </header>
 
-<!-- <div class="actions">
+<div class="actions">
   <NewPartKey />
-</div> -->
+</div>
 
 <Participations />
 
 
-
-
-<!-- <style lang="scss">
+<style lang="scss">
   .actions {
     margin-top: 0.5em;
   }
-</style> -->
+</style>

@@ -119,7 +119,7 @@
   }
   .address {
     padding: 0.75em 0;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color-secondary);
     &:first-child {
       border: none;
     }

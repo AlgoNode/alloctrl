@@ -24,7 +24,7 @@
   }
   .list :global .prop {
     padding: 0.5em 0;
-    border-top: 1px solid var(--border-color-secondary);
+    border-top: 1px solid var(--border-color);
   }
   .list-title + .list :global .prop:first-child {
     border-color: var(--primary);

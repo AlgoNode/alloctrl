@@ -5,7 +5,8 @@
   import BaseField from './BaseField.svelte';
   export let name: string = 'my.toggle';
   export let value: FieldValue;
-  export let label: string|undefined = undefined;;
+  export let label: string|undefined = undefined;
+  export let info: string|undefined = undefined;
   export let options: SelectOption[] = [];
   export let error: FieldError|undefined = undefined;
   export let fullWidth: boolean = false;
@@ -16,6 +17,7 @@
 <BaseField
   { label }
   { name }
+  { info }
   { style }
   { fullWidth }
   { value }

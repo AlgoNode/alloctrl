@@ -111,14 +111,22 @@ body {
   font-size: 0.75em;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--gray-35);
-  @include dark(true) {
-    color: var(--gray-80);
-  }
+  color: var(--text-color);
   small {
     text-transform: none;
     display: block;
     font-size: 0.875em;
+  }
+}
+.data-info {
+  font-family: var(--font-regular);
+  font-weight: normal;
+  font-size: 0.875em;
+  font-style: italic;
+  margin: 0.25em 0 0.5em;
+  color: var(--gray-35);
+  @include dark(true) {
+    color: var(--gray-80);
   }
 }
 
@@ -188,7 +196,8 @@ strong {
   font-weight: 500;
 }
 
-%code {
+%code,
+.code {
   display: inline-block;
   max-width: 100%;
   overflow: auto;
@@ -198,13 +207,15 @@ strong {
   line-height: 1.5;
   padding: 0.125em 0.3125em;
   border-radius: var(--inner-radius);
-  border: 1px solid var(--border-color-secondary);
+  border: 1px solid var(--border-color);
   background: var(--bg-color);
 }
 
-%code-block {
+%code-block,
+.code-block {
   @extend %code;
-  margin-bottom: 1.5em;
+  display: block;
+  padding: 1em;
 }
 
 
@@ -252,7 +263,7 @@ strong {
   code { 
     @extend %code; 
     background: var(--card-bg);
-    border-color: var(--border-color);
+    border-color: var(--border-color-secondary);
   }
   pre {
     margin-bottom: 1.25em;
@@ -276,7 +287,7 @@ strong {
 }
 
 .separator {
-  border-left: 1px solid var(--border-color-secondary);
+  border-left: 1px solid var(--border-color);
   margin: 0 0.25em;
   display: inline-block;
   height: 0.875em;

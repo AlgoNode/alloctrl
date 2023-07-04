@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Icon from "$components/icons/Icon.svelte";
-  import { Styles } from "$lib/enums";
   import type { FieldError, FieldValue } from "$lib/forms/types";
+  import { Styles } from "$lib/enums";
+  import Icon from "$components/icons/Icon.svelte";
   import Error from "./Error.svelte";
   export let label: string|undefined = undefined;
+  export let info: string|undefined = undefined;
   export let name: string = 'my.toggle';
   export let icon: string|undefined = undefined;
   export let value: FieldValue;
@@ -29,6 +30,11 @@
     <label class="field-label data-label" for={ name }>
       {label}
     </label>
+  {/if}
+  {#if info}
+    <div class="data-info">
+      { info }
+    </div>
   {/if}
 
   <div 
@@ -61,14 +67,14 @@
   .input-wrapper {
     display: inline-block;
     background: var(--white);
-    border: 1px solid var(--border-color-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 0.875rem;
-
     @include dark {
       background: var(--gray-15);
     }
 
-    &:focus {
+    &:focus,
+    &:focus-within {
       outline: 1px dotted var(--primary);
       outline-offset: 2px;
     }

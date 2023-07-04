@@ -228,7 +228,7 @@
   .options {
     padding: $wrapper-padding;
     background: var(--white);
-    border: 1px solid var(--border-color-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 10rem;
     white-space: nowrap;
     position: relative;
@@ -363,7 +363,7 @@
       }
       .active-state {
         background: var(--bg-color);
-        border: 1px solid var(--border-color);
+        border: 1px solid var(--border-color-secondary);
       }
   }
 

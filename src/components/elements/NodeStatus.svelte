@@ -36,7 +36,7 @@
     padding-right: 1em;
     & + .info {
       padding-left: 1em;
-      border-left: 1px solid var(--border-color-secondary);
+      border-left: 1px solid var(--border-color);
     }
   }
 </style>
