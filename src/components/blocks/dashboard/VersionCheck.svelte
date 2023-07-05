@@ -31,7 +31,7 @@
 {#await init() }
   <Skeleton height="8em" />
 
-  
+
 {:then { isLatest, latest } }
   <section class="card">
     <h3 class="card-header card-title">
@@ -51,14 +51,16 @@
           value={ $status.version }
         />
       </div>
-      <div class="latest">
-        <Prop label={ __('versions.latest') }>
-          <svelte:fragment slot="value">
-            { latest.version } <br/>
-            { __('versions.published') } { new Date(latest.publishedAt).toLocaleDateString() }
-          </svelte:fragment>
-        </Prop> 
-      </div>
+      {#if !isLatest }
+        <div class="latest">
+          <Prop label={ __('versions.latest') }>
+            <svelte:fragment slot="value">
+              { latest.version } <br/>
+              { __('versions.published') } { new Date(latest.publishedAt).toLocaleDateString() }
+            </svelte:fragment>
+          </Prop> 
+        </div>
+      {/if}
     </div>
   </section>
 
