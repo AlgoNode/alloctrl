@@ -1,25 +1,18 @@
 <script lang="ts">
   import type { ParticipationProps } from "$lib/api/types";
   import { groupBy } from "lodash-es";
-  import { onMount } from "svelte";
   import { tinifyAddress } from "$lib/helpers/format";
   import AlgodApi from "$lib/api/algod";
-  import Spinner from "$components/elements/Spinner.svelte";
   import PartKey from "./PartKey.svelte";
   import Icon from "$components/icons/Icon.svelte";
   import GlobalEvent from "$components/utils/GlobalEvent.svelte";
   import __ from "$lib/locales";
+  import Skeleton from "$components/elements/Skeleton.svelte";
+  import ErrorCard from "$components/elements/ErrorCard.svelte";
+  import { ErrorCode } from "$lib/enums";
 
-  let loading: boolean = false;
-  let participations: { 
-    address: string, 
-    partKeys: ParticipationProps[]
-  }[] = [];
-
-  onMount(update);
-  async function update() {
-    if (loading) return;
-    loading = true;
+ 
+  async function getParticipationKeys() {
     const partKeys = await AlgodApi.private.get('/v2/participation') as ParticipationProps[];
     const groupedKeys = groupBy(partKeys, 'address');
     const addresses = Object.keys(groupedKeys);
@@ -39,53 +32,57 @@
         });
     });
 
-    participations = Object.entries(groupedKeys)
+    const participations = Object.entries(groupedKeys)
       .map(([address, partKeys]) => ({ address, partKeys }))
       .sort((a,b) => a.address.localeCompare(b.address));
     
-    loading = false;
+
+    return participations;
   }
 </script>
 
 
-<section class="wrapper">
-  {#if loading }
-    <Spinner /> { __('participation.loading') }
-  {/if }
+
+{#await getParticipationKeys() }
+  <Skeleton height="2em" width="66%" />  
+  <Skeleton height="8em" />
+
+{:then participations }
+  <section>
+    <ul class="participants">
+      {#each participations as { address, partKeys } (address)}
+        <li class="participant">
+          <h2 class="block-title">
+            <span class="icon">
+              <Icon name="user" /> 
+            </span>
+            { tinifyAddress(address) }
+          </h2>
+          <ul class="part-keys">
+          {#each partKeys as partKey (partKey.id) }
+            <li class="part-key">
+              <PartKey { partKey } />
+            </li>
+          {/each}
+          </ul>
+        </li>
+      {/each}
+    </ul>
+  </section>
   
-  <ul class="participants">
-    {#each participations as { address, partKeys } (address)}
-      <li class="participant">
-        <h2 class="block-title">
-          <span class="icon">
-            <Icon name="user" /> 
-          </span>
-          { tinifyAddress(address) }
-        </h2>
-        <ul class="part-keys">
-        {#each partKeys as partKey (partKey.id) }
-          <li class="part-key">
-            <PartKey { partKey } />
-          </li>
-        {/each}
-        </ul>
-      </li>
-    {/each}
-  </ul>
+  <GlobalEvent 
+    event="participations.refresh" 
+    callback={ getParticipationKeys }
+  />
 
-</section>  
+{:catch _}
+  <ErrorCard code={ ErrorCode.API_NOT_RESPONDING } />
 
+{/await}
 
-<GlobalEvent 
-  event="participations.refresh" 
-  callback={ update }
-/>
 
 
 <style lang="scss">
-  .wrapper {
-    margin-top: 2em;
-  }
   .participant {
     margin-top: 2em;
     .icon {

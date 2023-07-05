@@ -26,6 +26,9 @@
     width: 100%;
     border-radius: var(--radius);
     overflow: hidden;
+    & :global + .skeleton {
+      margin-top: var(--gap);
+    }
     &:before {
       content: '';
       position: absolute;
