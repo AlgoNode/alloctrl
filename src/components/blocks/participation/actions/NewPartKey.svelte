@@ -69,7 +69,7 @@
 
 
 
-<Popup small >
+<Popup>
   <svelte:fragment slot="trigger" let:open >
     <Button 
       label={ __('participation.newPartKey') }

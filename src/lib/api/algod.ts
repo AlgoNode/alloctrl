@@ -13,7 +13,7 @@ export default abstract class AlgodApi {
   * ==================================================
   */
   public static fetchPublic(method: Method, endpoint: string, data?: any): Promise<Payload> {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       try {
         const response = await axios({
           method,
@@ -24,7 +24,7 @@ export default abstract class AlgodApi {
         resolve( camelcaseKeys(response?.data, { deep: true }));
       }
       catch(e: any) {
-        resolve( this.handleError(e) );
+        reject( this.handleError(e) );
       }
     });
   }
@@ -37,7 +37,7 @@ export default abstract class AlgodApi {
   * ==================================================
   */
   private static fetchPrivate(method: Method, endpoint: string, data?: any): Promise<Payload> {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       try {
         const response = await axios({
           method,
@@ -48,7 +48,7 @@ export default abstract class AlgodApi {
         resolve( camelcaseKeys(response?.data, { deep: true }) );
       }
       catch(e: any) {
-        resolve( this.handleError(e) )
+        reject( this.handleError(e) )
       }
     })
   }

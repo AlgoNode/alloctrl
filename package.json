@@ -12,13 +12,14 @@
 		"lint": "eslint ."
 	},
 	"devDependencies": {
-		"@fortawesome/fontawesome-free": "^6.2.0",
+		"@fortawesome/fontawesome-free": "^6.4.0",
 		"@sveltejs/adapter-node": "^1.2.4",
 		"@sveltejs/kit": "^1.20.1",
 		"@types/lodash": "^4.14.184",
 		"@types/lodash-es": "^4.17.6",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
+		"algosdk": "^2.4.0",
 		"eslint": "^8.16.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"sass": "^1.54.4",

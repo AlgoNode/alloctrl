@@ -7,6 +7,11 @@
 
 {#if $status}
   <div class="status">
+    {#if $status.version }
+      <span class="info">
+        { $status.version } 
+      </span>
+    {/if}
     {#if $status.lastRound }
       <span class="info">
         Block #{ $status.lastRound } 

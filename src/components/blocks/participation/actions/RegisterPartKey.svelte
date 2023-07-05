@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ParticipationProps } from "$lib/api/types";
   import { Styles } from "$lib/enums";
-  import { TransactionType } from "algostack";
+  import { TransactionType } from "algosdk";
   import __ from "$lib/locales";
   import Confirm from "$components/elements/Confirm.svelte";
   import Toggle from "$components/forms/Toggle.svelte";

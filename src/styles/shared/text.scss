@@ -133,6 +133,7 @@ body {
 .data-value {
   font-family: var(--font-condensed);
   font-size: 0.78125em;
+  line-height: 1.3;
   color: var(--gray-10);
   @include dark(true) {
     color: var(--white)

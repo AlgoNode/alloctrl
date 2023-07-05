@@ -7,15 +7,18 @@
   background: var(--card-bg);
   border: 1px solid var(--border-color-secondary);
   border-radius: var(--radius);
-  .card-header {
-    padding: var(--card-padding-y) var(--card-padding-x) calc(var(--card-padding-y) * 0.75);
-    border-bottom: 1px solid var(--border-color-secondary);
-  }
-  .card-content {
-    padding: var(--card-padding);
-  }
 }
 
+.card-header {
+  padding: var(--card-padding-y) var(--card-padding-x) calc(var(--card-padding-y) * 0.75);
+  border-bottom: 1px solid var(--border-color-secondary);
+  > .icon {
+    margin-right: 0.5em;
+  }
+}
+.card-content {
+  padding: var(--card-padding);
+}
 
 /**
  * Styled cards
@@ -23,7 +26,7 @@
  */
 
 // Message card 
-.card.message-card {
+.card.error {
   border-width: 2px;
   border-color: var(--red);
 }

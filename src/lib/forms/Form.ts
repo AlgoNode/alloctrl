@@ -1,9 +1,9 @@
 import type { Writable, Readable } from "svelte/store";
 import type { FormConfigs, FormErrors, FormValues } from "./types";
+import { ErrorCode } from "$lib/enums";
 import { derived, get, writable } from "svelte/store";
 import { isRequired, typeValidation } from "./validations";
 import BaseModule from "$lib/BaseModule";
-import { ErrorCode } from "./enums";
 
 
 

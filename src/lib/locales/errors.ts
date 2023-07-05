@@ -1,5 +1,5 @@
-import { ErrorCode } from "$lib/forms/enums";
 import type { LocaleDictionnary } from "$lib/types";
+import { ErrorCode } from "$lib/enums";
 
 const strings: LocaleDictionnary =  {
   [ErrorCode.DEFAULT]: 'An error occured.',
@@ -10,7 +10,8 @@ const strings: LocaleDictionnary =  {
   [ErrorCode.NOT_AN_ADDRESS]: 'This should be a valid Algorand address.',
   [ErrorCode.NOT_AN_URL]: 'This should be a valid URL.',
   [ErrorCode.NOT_AN_OPTION]: 'This is not in the available options.',
-  'hasErrors': 'The form contains errors. Please double-check your data and submit again.'
+
+  [ErrorCode.API_NOT_RESPONDING]: 'Algod API is not responding. Make sure your Node is up and running.',
 }
 
 export default strings;

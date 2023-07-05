@@ -1,7 +1,7 @@
 import type { LocaleDictionnary } from "$lib/types";
 
 const strings: LocaleDictionnary =  {
-  title: 'Your Node',
+  title: 'Algorand Node',
 }
 
 export default strings;

@@ -48,7 +48,7 @@
 </script>
 
 
-<div class="wrapper">
+<section class="wrapper">
   {#if loading }
     <Spinner /> { __('participation.loading') }
   {/if }
@@ -73,7 +73,7 @@
     {/each}
   </ul>
 
-</div>  
+</section>  
 
 
 <GlobalEvent 

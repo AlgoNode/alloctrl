@@ -4,15 +4,15 @@
   import __ from "$lib/locales";
 </script>
 
-<header>
+<header class="page-header">
   <h1 class="page-title">
     { __('participation.title') }
   </h1>
+  <div class="actions">
+    <NewPartKey />
+  </div>
 </header>
 
-<div class="actions">
-  <NewPartKey />
-</div>
 
 <Participations />
 

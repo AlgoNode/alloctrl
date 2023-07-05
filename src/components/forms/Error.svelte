@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ErrorCode } from "$lib/forms/enums";
+  import { ErrorCode } from "$lib/enums";
   import type { FieldError } from "$lib/forms/types";
   import __ from "$lib/locales";
   export let error: FieldError;
