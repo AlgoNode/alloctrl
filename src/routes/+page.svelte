@@ -1,9 +1,10 @@
 <script lang="ts">
   import { PUBLIC_CHECK_VERSION_ON_GITHUB } from "$env/static/public";
-  import VersionCheck from "$components/blocks/dashboard/VersionCheck.svelte";
+  import { envBool } from "$lib/helpers/env";
   import __ from "$lib/locales";
-    import Metrics from "$components/blocks/dashboard/Metrics.svelte";
-
+  import VersionCheck from "$components/blocks/dashboard/VersionCheck.svelte";
+  import CurrentVersion from "$components/blocks/dashboard/CurrentVersion.svelte";
+  import Metrics from "$components/blocks/dashboard/Metrics.svelte";
 </script>
 
 <header class="page-header">
@@ -13,8 +14,11 @@
 </header>
 
 <div class="grid">
-  {#if PUBLIC_CHECK_VERSION_ON_GITHUB }
+  {#if envBool(PUBLIC_CHECK_VERSION_ON_GITHUB) }
     <VersionCheck />
+
+  {:else}
+    <CurrentVersion />
   {/if}
   
   <Metrics />
