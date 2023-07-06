@@ -1,8 +1,6 @@
 <script lang="ts">
-  import DarkMode from "$components/elements/DarkMode.svelte";  
   import NodeStatus from "$components/elements/NodeStatus.svelte";
-    import WalletConnect from "$components/elements/WalletConnect.svelte";
-  
+  import WalletConnect from "$components/elements/WalletConnect.svelte";
 </script>
 
 
@@ -13,7 +11,6 @@
   </div>
   <div class="group">
     <WalletConnect />
-    <DarkMode />
   </div>
 </div>
 

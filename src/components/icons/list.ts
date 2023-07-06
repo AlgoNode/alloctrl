@@ -1,5 +1,5 @@
 import algo from '$assets/tokens/algo.svg?raw';
-import logo from '$assets/logos/allo-ctrl.svg?raw';
+import logo from '$assets/logos/allo-ctrl-beta.svg?raw';
 
 import defly from '$assets/logos/defly.svg?raw';
 import pera from '$assets/logos/pera.svg?raw';

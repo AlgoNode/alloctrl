@@ -188,6 +188,7 @@
         <CopyToClipboard 
           content={ code } 
           clickable={ false }
+          fullWidth
           let:copy
         >
           <pre><code class="code-block">{ code }</code></pre>

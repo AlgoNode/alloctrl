@@ -55,7 +55,6 @@ async function init(set: SetStatusCallback) {
     ...get(status), 
     version: `v${build.major}.${build.minor}.${build.buildNumber}-${build.channel}`,
     lastRound: Number(statusResponse.lastRound),
-    lastTimestamp: getBlockTimestamp(statusResponse),
   });
 }
 
