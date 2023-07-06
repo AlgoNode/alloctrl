@@ -11,6 +11,7 @@ export enum Method {
 export enum PropType {
   BLOCK = 'block',
   ADDRESS = 'address',
+  AMOUNT = 'amount',
 }
 
 
@@ -58,4 +59,5 @@ export enum ErrorCode {
   NOT_AN_URL,
   NOT_AN_OPTION,
   API_NOT_RESPONDING,
+  GITHUB_API_LIMIT_EXCEEDED,
 }

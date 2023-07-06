@@ -137,7 +137,7 @@
       />
     </div>
 
-    <div class="columns">
+    <div class="grid">
       <div class="field">
         <Text
           name="firstValid"
@@ -210,10 +210,8 @@
   .field {
     margin-top: 1em;
   }
-  .columns {
-    display: grid;
+  .grid {
     grid-template-columns: 1fr 1fr;
-    gap: 1em;
   }
   .command {
     margin-top: 2em;

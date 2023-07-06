@@ -148,10 +148,7 @@
     display: inline-block;
   }
   .grid { 
-    display: grid;
-    width: 100%;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap);
     @include min-width($bp50) {
       grid-template-columns: repeat(3, 1fr);
     }

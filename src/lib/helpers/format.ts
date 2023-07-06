@@ -16,14 +16,14 @@ export function formatTimestamp (timestamp: number) {
  * ==================================================
  */
 export function formatAlgoAmount (amount: number, decimals: number = 6) {
-  return formatAssetAmount(amount, decimals);
+  return formatAmount(amount, decimals);
 }
 
 /**
  * Format an asset amount
  * ==================================================
  */
-export function formatAssetAmount (amount: number, decimals:number = 0, options: AmountFormatOptions = {}) {
+export function formatAmount (amount: number, decimals:number = 0, options: AmountFormatOptions = {}) {
   if (typeof amount !== 'number') return '—';
   
   if (options.abbreviate) {

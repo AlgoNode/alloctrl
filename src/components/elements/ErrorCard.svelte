@@ -13,7 +13,7 @@
 </script>
 
 <div class="card error">
-  <div class="card-content">
+  <div class="card-content grid">
     <span class="icon">
       <Icon name="error" />
     </span>
@@ -25,7 +25,6 @@
 
 <style lang="scss">
   .card-content {
-    display: grid;
-    grid-template-columns: 2rem auto;
+    grid-template-columns: min-content auto;
   }  
 </style>

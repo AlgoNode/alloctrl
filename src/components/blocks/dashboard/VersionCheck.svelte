@@ -7,10 +7,13 @@
   import status, { getCurrentVersion } from "$lib/stores/status";
   import Icon from "$components/icons/Icon.svelte";
   import Skeleton from "$components/elements/Skeleton.svelte";
+    import CurrentVersion from "./CurrentVersion.svelte";
+
+  const githubLatestReleaseUrl = 'https://api.github.com/repos/algorand/go-algorand/releases/latest';
 
   async function init() {
     const [{ data: latestVersion }, currentVersion ] = await Promise.all([
-      axios.get('https://api.github.com/repos/algorand/go-algorand/releases/latest'),
+      axios.get(githubLatestReleaseUrl),
       getCurrentVersion,
     ])
     return {
@@ -44,7 +47,7 @@
       {/if}
     </h3>
 
-    <div class="card-content columns">
+    <div class="card-content grid">
       <div class="current">
         <Prop 
           label={ __('versions.current') }
@@ -65,16 +68,21 @@
   </section>
 
 
-{:catch _ }
-  <ErrorCard code={ ErrorCode.API_NOT_RESPONDING } />
+{:catch error }
+  {#if error?.config?.url === githubLatestReleaseUrl }
+    <ErrorCard code={ ErrorCode.GITHUB_API_LIMIT_EXCEEDED } />
+    <CurrentVersion />
+  {:else }
+    <ErrorCard code={ ErrorCode.API_NOT_RESPONDING } />
+
+  {/if}
 
 {/await}
 
 
 
 <style lang="scss">
-  .columns {
-    display: grid;
+  .grid {
     grid-template-columns: 1fr 1fr;
   }
   

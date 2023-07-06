@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { PropLabel, PropValue } from "$lib/types";
-  import { PropType } from "$lib/enums";
-    import { tinifyAddress } from "$lib/helpers/format";
+  import { PropType, Sizes } from "$lib/enums";
+  import { formatAmount, tinifyAddress } from "$lib/helpers/format";
+  import Icon from "$components/icons/Icon.svelte";
   export let label: PropLabel;
   export let value: PropValue = undefined;
   export let type: PropType|undefined = undefined;
+  export let size: Sizes = Sizes.REGULAR;
+  export let icon: string|undefined = undefined;
 </script>
 
 <div class="prop">
@@ -13,7 +16,12 @@
       { label }
     </slot>
   </dt>
-  <dd class="data-value">
+  <dd class="data-value size-{ size }">
+    {#if icon}
+      <span class="icon">
+        <Icon name={ icon } />
+      </span>
+    {/if}
     <slot name="value">
       {#if value === undefined }
         —
@@ -27,6 +35,9 @@
           <a class="text-link" href={ `https://preview.allo.info/block/${ value }` } target="_blank" >
             #{ value }
           </a>
+
+        {:else if type === PropType.AMOUNT }
+          { formatAmount( Number(value) ) }
 
         {:else }
           { value }
@@ -44,5 +55,15 @@
   }
   .data-value {
     word-break: break-all;
+    &.size-large {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  }
+  .icon {
+    font-size: 0.875em;
+    display: inline-block;
+    margin: -0.5em 0.3125em 0 0;
+    vertical-align: middle;
   }
 </style>

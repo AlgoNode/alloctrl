@@ -16,7 +16,7 @@ body {
 }
 
 .page-header {
-  margin: 0 0 2em;
+  margin: 2.75rem 0 2em;
 }
 
 .container {
@@ -42,6 +42,16 @@ body {
   max-width: 32rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+/**
+* Grids
+* ==================================================
+*/ 
+.grid {
+  display: grid;
+  gap: var(--gap);
+  width: 100%;
 }
 
 

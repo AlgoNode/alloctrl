@@ -12,6 +12,7 @@ const strings: LocaleDictionnary =  {
   [ErrorCode.NOT_AN_OPTION]: 'This is not in the available options.',
 
   [ErrorCode.API_NOT_RESPONDING]: 'Algod API is not responding. Make sure your Node is up and running.',
+  [ErrorCode.GITHUB_API_LIMIT_EXCEEDED]: `Cannot fetch the latest release from GitHub. API rate limits exceeded (60 req/hour).`,
 }
 
 export default strings;
