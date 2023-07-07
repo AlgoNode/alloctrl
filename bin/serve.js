@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const appDir = dirname(scriptDir + '/../..');
 const server = spawn(`node`, [
- '-r', `${appDir}/../node_modules/dotenv/config.js`, 
+ '-r', `${appDir}/../dotenv/config.js`, 
  `${appDir}/build`
 ]);
 
