@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { camelCase } from "lodash-es";
   import { ErrorCode, PropType, Sizes } from "$lib/enums";
+  import __ from "$lib/locales";
   import ErrorCard from "$components/elements/ErrorCard.svelte";
   import Skeleton from "$components/elements/Skeleton.svelte";
   import AlgodApi from "$lib/api/algod";
-    import Prop from "$components/elements/Prop.svelte";
-    import __ from "$lib/locales";
+  import Prop from "$components/elements/Prop.svelte";
 
   async function init() {
-    const metrics: Record<string, any> = {};
-    const response = await AlgodApi.private.get('/metrics');
+    const metrics: Record<string, number> = {};
+    const response = await AlgodApi.private.get('/metrics') as string;
     response
       .replace(/^#.+/gm, '') // remove comments
       .replace(/\n+/g, '\n') // merge multiple new lines

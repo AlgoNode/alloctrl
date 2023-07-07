@@ -7,5 +7,5 @@ export interface FetchOptions {
   method?: 'GET'|'POST'|'PUT'|'DELETE',
   paramsAllowlist?: string[],
   searchParams?: URLSearchParams,
-  params?: Record<string, any>,
+  params?: Record<string, string|number>,
 }

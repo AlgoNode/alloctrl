@@ -12,7 +12,8 @@ export default abstract class AlgodApi {
   * FETCH PUBLIC API
   * ==================================================
   */
-  public static fetchPublic(method: Method, endpoint: string, data?: any): Promise<Payload> {
+  /*  eslint-disable no-async-promise-executor */
+  public static fetchPublic(method: Method, endpoint: string, data?: unknown): Promise<unknown> {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios({
@@ -23,7 +24,7 @@ export default abstract class AlgodApi {
         });
         resolve( camelcaseKeys(response?.data, { deep: true }));
       }
-      catch(e: any) {
+      catch(e: unknown) {
         reject( this.handleError(e) );
       }
     });
@@ -36,18 +37,19 @@ export default abstract class AlgodApi {
   * FETCH PRIVATE API USING LOCAL PROXY
   * ==================================================
   */
-  private static fetchPrivate(method: Method, endpoint: string, data?: any): Promise<Payload> {
+  /*  eslint-disable no-async-promise-executor */
+  private static fetchPrivate(method: Method, endpoint: string, data?: unknown): Promise<unknown> {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios({
           method,
-          baseURL: `${ PUBLIC_APP_HOST }/proxy`,
+          baseURL: '/proxy',
           url: endpoint,
           data,
         });
         resolve( camelcaseKeys(response?.data, { deep: true }) );
       }
-      catch(e: any) {
+      catch(e: unknown) {
         reject( this.handleError(e) )
       }
     })
@@ -59,17 +61,18 @@ export default abstract class AlgodApi {
   * Creage, Sign and Send Transactions
   * ==================================================
   */
-  public static async sendTxn(params: Record<string,any>) {
+  /*  eslint-disable no-async-promise-executor */
+  public static sendTxn(params: Record<string,unknown>) {
     return new Promise(async (resolve) => {
       try {
-        const { data: txnParams } = await axios.post(`${ PUBLIC_APP_HOST }/proxy/txn/make`, params);
+        const { data: txnParams } = await axios.post('/proxy/txn/make', params);
         const txn = algostack.txns!.makeTxn(txnParams); 
         const signedTxn = await algostack.txns!.signTxns( txn );
         if (!signedTxn) return resolve( undefined );
-        const sentTxn = await axios.post(`${ PUBLIC_APP_HOST }/proxy/txn/send`, signedTxn);
+        const sentTxn = await axios.post('/proxy/txn/send', signedTxn);
         resolve( camelcaseKeys(sentTxn?.data, { deep: true }) );
       }
-      catch(e: any) {
+      catch(e: unknown) {
         resolve( this.handleError(e) )
       }
     });
@@ -79,17 +82,17 @@ export default abstract class AlgodApi {
 
 
   public static public = {
-    get: (endpoint: string, data?: any) => this.fetchPublic(Method.GET, endpoint, data),
-    post: (endpoint: string, data?: any) => this.fetchPublic(Method.POST, endpoint, data),
-    put: (endpoint: string, data?: any) => this.fetchPublic(Method.PUT, endpoint, data),
-    delete: (endpoint: string, data?: any) => this.fetchPublic(Method.DELETE, endpoint, data),
+    get: (endpoint: string, data?: unknown) => this.fetchPublic(Method.GET, endpoint, data),
+    post: (endpoint: string, data?: unknown) => this.fetchPublic(Method.POST, endpoint, data),
+    put: (endpoint: string, data?: unknown) => this.fetchPublic(Method.PUT, endpoint, data),
+    delete: (endpoint: string, data?: unknown) => this.fetchPublic(Method.DELETE, endpoint, data),
   }
   public static private = {
-    get: (endpoint: string, data?: any) => this.fetchPrivate(Method.GET, endpoint, data),
-    post: (endpoint: string, data?: any) => this.fetchPrivate(Method.POST, endpoint, data),
-    put: (endpoint: string, data?: any) => this.fetchPrivate(Method.PUT, endpoint, data),
-    delete: (endpoint: string, data?: any) => this.fetchPrivate(Method.DELETE, endpoint, data),
-    txn: (params: Record<string,any>) => this.sendTxn(params),
+    get: (endpoint: string, data?: unknown) => this.fetchPrivate(Method.GET, endpoint, data),
+    post: (endpoint: string, data?: unknown) => this.fetchPrivate(Method.POST, endpoint, data),
+    put: (endpoint: string, data?: unknown) => this.fetchPrivate(Method.PUT, endpoint, data),
+    delete: (endpoint: string, data?: unknown) => this.fetchPrivate(Method.DELETE, endpoint, data),
+    txn: (params: Record<string,unknown>) => this.sendTxn(params),
   }
 
 
@@ -98,7 +101,7 @@ export default abstract class AlgodApi {
   * ERROR HANDLER
   * ==================================================
   */
-  private static handleError(e: any) {
+  private static handleError(e: unknown) {
     console.log('ERROR', e);
     return { error: true, data: e }
   }

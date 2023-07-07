@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ToggleOption } from './types';
   import type { FieldError } from '$lib/forms/types';
-  import { Sizes, Styles } from '$lib/enums';
+  import { Styles } from '$lib/enums';
   import { onMount, tick, createEventDispatcher } from 'svelte';
   import Icon from '$components/icons/Icon.svelte';
   import Error from './Error.svelte';

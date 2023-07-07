@@ -6,7 +6,6 @@ import Storage from "./storage/Storage";
 class BaseModule {
   protected settingsStore = 'module';
   protected subs: Unsubscriber[] = [];
-  constructor() {}
 
   /**
   * Stores

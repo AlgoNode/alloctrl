@@ -10,12 +10,11 @@
   
   const dispatch = createEventDispatcher();
   let active: boolean = false;
-  let callbackFn:  MaybePromise<any>;
-  export function confirm (callback: MaybePromise<any>) {
+  let callbackFn:  MaybePromise<unknown>;
+  export function confirm (callback: MaybePromise<unknown>) {
     active = true;
     callbackFn = callback;
-  };
-
+  }
 
   function accept() {
     active = false;

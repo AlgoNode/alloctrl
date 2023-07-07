@@ -27,7 +27,7 @@ class Form extends BaseModule {
   * ==================================================
   */
   private addDefaults() {
-    Object.entries(this.fields).forEach(([field, props]) => {
+    Object.entries(this.fields).forEach(([, props]) => {
       if (!props.validations) props.validations = [];
       props.validations = [
         ...(props.required ? [isRequired] : []),

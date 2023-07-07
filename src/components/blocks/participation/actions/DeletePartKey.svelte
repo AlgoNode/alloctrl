@@ -11,7 +11,7 @@
   async function deletePartKey() {
     if (loading) return;
     loading = true;
-    const response = await AlgodApi.private.delete(`/v2/participation/${partKey.id}`);
+    await AlgodApi.private.delete(`/v2/participation/${partKey.id}`);
     dispatchEvent(new Event('participations.refresh'));
     loading = false;
   } 

@@ -5,6 +5,7 @@
   import { PropType, Sizes, Styles } from "$lib/enums";
   import { truncateString } from "$lib/helpers/format";
   import { onMount, onDestroy, getContext} from "svelte";
+  import { scale } from "svelte/transition";
   import { round } from "lodash-es";
   import __ from "$lib/locales";
   import Prop from "$components/elements/Prop.svelte";
@@ -15,12 +16,10 @@
   import RegisterPartKey from "./actions/RegisterPartKey.svelte";
   import ViewDetails from "./actions/ViewDetails.svelte";
   import Spinner from "$components/elements/Spinner.svelte";
-    import { scale } from "svelte/transition";
   export let partKey: ParticipationProps;
   const {
     id,
     address,
-    effectiveFirstValid,
     key: {
       voteFirstValid,
       voteLastValid,

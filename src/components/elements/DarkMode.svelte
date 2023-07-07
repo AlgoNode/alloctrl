@@ -1,6 +1,6 @@
 <script lang="ts">
   import type Profile from "$lib/profile/Profile";
-  import { Sizes, Styles, Theme } from "$lib/enums";
+  import { Styles, Theme } from "$lib/enums";
   import { getContext } from "svelte";
   import Toggle from "$components/forms/Toggle.svelte";
   const profile: Profile = getContext('profile');

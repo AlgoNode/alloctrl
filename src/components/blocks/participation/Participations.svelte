@@ -5,9 +5,8 @@
   import AlgodApi from "$lib/api/algod";
   import PartKey from "./PartKey.svelte";
   import Icon from "$components/icons/Icon.svelte";
-  import GlobalEvent from "$components/utils/GlobalEvent.svelte";
-  import __ from "$lib/locales";
   import Skeleton from "$components/elements/Skeleton.svelte";
+  import GlobalEvent from "$components/utils/GlobalEvent.svelte";
   import ErrorCard from "$components/elements/ErrorCard.svelte";
   import { ErrorCode } from "$lib/enums";
 

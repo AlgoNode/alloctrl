@@ -6,6 +6,7 @@
   import Confirm from "$components/elements/Confirm.svelte";
   import Toggle from "$components/forms/Toggle.svelte";
   import AlgodApi from "$lib/api/algod";
+    import type { Payload } from "$lib/types";
 
   export let partKey: ParticipationProps;
   export let loading: boolean = false;
@@ -31,7 +32,9 @@
   async function confirmed() {
     if (loading) return;
     loading = true;
-    const txn: any = partKey.online ? await takeOffline() : await takeOnline();
+    const txn = partKey.online 
+      ? await takeOffline() as Payload 
+      : await takeOnline() as Payload;
     if (txn?.txId) {
       partKey.online = !partKey.online;
       dispatchEvent(new Event('participations.refresh'));

@@ -5,9 +5,9 @@
 
 import type { PropType } from "./enums";
 
-export type Payload = Record<string, any>;
-export type PostData = Record<string, any>;
-export type FetchParams = Record<string, any>;
+export type Payload = Record<string, string|number|boolean>;
+export type PostData = Record<string, string|number|boolean>;
+export type FetchParams = Record<string, string|number|boolean>;
 
 export type PropLabel = string;
 export type PropValue = string|number|undefined;

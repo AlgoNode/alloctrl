@@ -2,7 +2,6 @@
 	import '../styles/global.scss';
 	import { setContext } from 'svelte';
 	import { browser } from "$app/environment";
-	import __ from '$lib/locales';
 	import Profile from '$lib/profile';
 	import MainNav from '$components/layout/MainNav.svelte';
 	import TopBar from '$components/layout/TopBar.svelte';

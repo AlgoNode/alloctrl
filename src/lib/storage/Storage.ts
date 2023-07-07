@@ -3,7 +3,7 @@ import { browser } from "$app/environment";
 
 export default abstract class Storage {
   private static namespace = 'ctrl';
-  private static stores: Record<string, any> = {};
+  private static stores: Record<string, Record<string, string|number>> = {};
 
   /**
   * Get a value saved in LocalStorage.
@@ -24,7 +24,7 @@ export default abstract class Storage {
   * Stores are kept in memory
   * ==================================================
   */
-  public static setValue(store: string, key: string, value: any) {
+  public static setValue(store: string, key: string, value: string|number) {
     if (!browser || !window?.localStorage) return undefined;
     const storeName = `${this.namespace}/${store}`;
     if (!this.stores[store]) {

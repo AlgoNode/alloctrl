@@ -5,6 +5,6 @@ export interface StatusProps {
   blockTime: number|undefined,
   averageBlockTime: number,
   sampleSize: number,
-};
+}
 
 export type SetStatusCallback = (set: StatusProps) => void;

@@ -1,19 +1,11 @@
 <script lang="ts">
   import { ErrorCode } from "$lib/enums";
   import __ from "$lib/locales";
-  import axios from "axios";
   import Prop from "$components/elements/Prop.svelte";
   import ErrorCard from "$components/elements/ErrorCard.svelte";
-  import status, { getCurrentVersion } from "$lib/stores/status";
-  import Icon from "$components/icons/Icon.svelte";
+  import { getCurrentVersion } from "$lib/stores/status";
   import Skeleton from "$components/elements/Skeleton.svelte";
-
-
-  
-
 </script>
-
-
 
 {#await getCurrentVersion }
   <Skeleton height="8em" />

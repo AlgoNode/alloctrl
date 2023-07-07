@@ -1,6 +1,6 @@
 import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
 import type { Payload } from '$lib/types';
-import type { AxiosError } from 'axios';
+import { getApiError } from '$lib/helpers/errors';
 import { PUBLIC_NODE_HOST, PUBLIC_NODE_PORT } from "$env/static/public";
 import { SECRET_ALGOD_ADMIN_TOKEN } from "$env/static/private";
 import { json, error } from '@sveltejs/kit'; 
@@ -33,10 +33,8 @@ const proxy = async (req: RequestEvent) => {
     });
     return json(response?.data);
   }
-  catch (e: any|AxiosError) {
-    console.log(e)
-    const { response: { status, statusText }} = e;
-    throw error(status, statusText);
+  catch (e) {
+    throw getApiError(e)
   }
 }
 

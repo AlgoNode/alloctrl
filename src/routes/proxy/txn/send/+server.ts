@@ -1,7 +1,7 @@
 import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
 import type { Payload } from '$lib/types';
-import type { AxiosError } from 'axios';
-import { json, error } from '@sveltejs/kit'; 
+import { getApiError } from '$lib/helpers/errors';
+import { json } from '@sveltejs/kit'; 
 import algostack from '$lib/api/algostack.server';
 
 /*** 
@@ -18,9 +18,7 @@ export const POST: RequestHandler<Payload> = async (req: RequestEvent) => {
     const sent = await algostack.txns!.submitTxns( signedTxns )
     return json(sent);
   }
-  catch (e: any|AxiosError) {
-    console.log(e)
-    const { response: { status, statusText }} = e;
-    throw error(status, statusText);
+  catch (e) {
+    throw getApiError(e);
   }
 };
