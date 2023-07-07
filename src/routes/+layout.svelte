@@ -5,8 +5,7 @@
 	import Profile from '$lib/profile';
 	import MainNav from '$components/layout/MainNav.svelte';
 	import TopBar from '$components/layout/TopBar.svelte';
-
-
+	
 	/**
 	* Profile
 	* ==================================================
