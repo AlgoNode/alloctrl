@@ -1,5 +1,4 @@
-import type { Payload } from "$lib/types";
-import { PUBLIC_APP_HOST, PUBLIC_NODE_HOST } from "$env/static/public";
+import { PUBLIC_NODE_HOST } from "$env/static/public";
 import { Method } from "$lib/enums";
 import camelcaseKeys from "camelcase-keys";
 import axios from "axios";
