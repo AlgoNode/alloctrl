@@ -3,6 +3,10 @@
 	"version": "0.0.1",
 	"type": "module",
 	"license": "BSD-3-Clause",
+	"files": [ 
+		"/build", 
+		".env.example" 
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
