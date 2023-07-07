@@ -3,10 +3,11 @@ import { spawn } from 'node:child_process';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const appDir = dirname(scriptDir + '/../..');
 const server = spawn(`node`, [
- '-r', `${__dirname}/../node_modules/dotenv/config.js`, 
- `${__dirname}/../build`
+ '-r', `${appDir}/../node_modules/dotenv/config.js`, 
+ `${appDir}/build`
 ]);
 
 server.stdout.pipe(process.stdout) 
