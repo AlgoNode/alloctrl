@@ -1,5 +1,5 @@
 {
-	"name": "allo-ctrl",
+	"name": "alloctrl",
 	"version": "0.0.4",
 	"type": "module",
 	"license": "BSD-3-Clause",
@@ -12,7 +12,7 @@
 		"serve": "bin/serve.js"
 	},
 	"engines": {
-		"node": ">= 18"
+		"node": ">= 16"
 	},
 	"scripts": {
 		"dev": "vite dev",
