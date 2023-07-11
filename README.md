@@ -30,22 +30,20 @@ There are 3 ways to use/install the dashboard:
 
 
 2. Run the NPX command
+
+    You will be asked download and install the package. Press `Y` to accept.
+    
     ``` shell
     npx alloctrl
+        Need to install the following packages:
+            alloctrl@0.1.4
+        Ok to proceed? (y) 
 
-    # Alternatively, you can specify the version yuo want to use
+    # Alternatively, you can specify the version you want to use
     # npx alloctrl@latest
     # npx alloctrl@0.1.4
     ```
 
-    You will be asked download and install the package. Press `Y` to accept.
-
-    ```shell
-    # npx alloctrl@latest
-    Need to install the following packages:
-        alloctrl@0.1.4
-    Ok to proceed? (y) 
-    ```
 
 3. First time using AlloCTRL? You need to create a `alloctrl.env` file.
     
