@@ -7,7 +7,7 @@ import Txns from 'algostack/txns';
 
 const globalConfigs: Configs = {
   apiPort: Number(publicEnv.PUBLIC_ALGOD_PORT),
-  apiUrl: publicEnv.PUBLIC_ALGOD_HOST,
+  apiUrl: 'http://'+ publicEnv.PUBLIC_ALGOD_HOST,
   apiToken: privateEnv.SECRET_ALGOD_ADMIN_TOKEN,
 }
 const modules: PlugableModules = { 

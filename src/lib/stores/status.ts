@@ -2,8 +2,8 @@ import type { NodeStatusResponse, Version } from "algosdk/dist/types/client/v2/a
 import type { SetStatusCallback, StatusProps } from "./types";
 import type { Readable } from "svelte/store";
 import { readable, get } from "svelte/store";
-import AlgodApi from "$lib/api/algod";
 import { browser } from "$app/environment";
+import AlgodApi from "$lib/api/algod";
 /**
 * Component lifecycle
 * ==================================================

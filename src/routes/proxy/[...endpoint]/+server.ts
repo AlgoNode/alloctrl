@@ -4,6 +4,7 @@ import { env as publicEnv } from "$env/dynamic/public";
 import { env as privateEnv } from "$env/dynamic/private";
 import { json, error } from '@sveltejs/kit'; 
 import axios from 'axios';
+import type { Payload } from '$lib/types';
 
 /**
 * Proxy
@@ -38,8 +39,8 @@ const proxy = async (req: RequestEvent) => {
 }
 
 
-export const GET: RequestHandler<Record<string, string>> = proxy;
-export const POST: RequestHandler<Record<string, string>> = proxy;
-export const PUT: RequestHandler<Record<string, string>> = proxy;
-export const DELETE: RequestHandler<Record<string, string>> = proxy;
+export const GET: RequestHandler<Payload> = proxy;
+export const POST: RequestHandler<Payload> = proxy;
+export const PUT: RequestHandler<Payload> = proxy;
+export const DELETE: RequestHandler<Payload> = proxy;
 

@@ -1,56 +1,31 @@
 <script lang="ts">
-  import type { ParticipationProps } from "$lib/api/types";
-  import { groupBy } from "lodash-es";
+
+  import { ErrorCode } from "$lib/enums";
+  import { scale } from "svelte/transition";
   import { tinifyAddress } from "$lib/helpers/format";
-  import AlgodApi from "$lib/api/algod";
+  import { participations, updateParticipationKeys } from "$lib/stores/participations";
   import PartKey from "./PartKey.svelte";
   import Icon from "$components/icons/Icon.svelte";
   import Skeleton from "$components/elements/Skeleton.svelte";
   import GlobalEvent from "$components/utils/GlobalEvent.svelte";
   import ErrorCard from "$components/elements/ErrorCard.svelte";
-  import { ErrorCode } from "$lib/enums";
-
- 
-  async function getParticipationKeys() {
-    const partKeys = await AlgodApi.private.get('/v2/participation') as ParticipationProps[];
-    const groupedKeys = groupBy(partKeys, 'address');
-    const addresses = Object.keys(groupedKeys);
-    const accounts = await Promise.all(addresses.map(address => (
-      AlgodApi.private.get(`/v2/accounts/${address}?exclude=all`))
-    ));
-    
-    accounts.forEach(account => {
-      const { address, status, participation: currentKey } = account;
-      const accountPartKeys = groupedKeys[address];
-      accountPartKeys
-        .sort((a,b) => a.id.localeCompare(b.id))
-        .forEach(accountPartKey => {
-          const { key } = accountPartKey; 
-          accountPartKey.active = key?.voteParticipationKey === currentKey?.voteParticipationKey;
-          accountPartKey.online = status === 'Online' && accountPartKey.active; 
-        });
-    });
-
-    const participations = Object.entries(groupedKeys)
-      .map(([address, partKeys]) => ({ address, partKeys }))
-      .sort((a,b) => a.address.localeCompare(b.address));
-    
-
-    return participations;
-  }
 </script>
 
 
+<GlobalEvent 
+  event="participations.refresh" 
+  callback={ updateParticipationKeys }
+/>
 
-{#await getParticipationKeys() }
+{#await updateParticipationKeys() }
   <Skeleton height="2em" width="66%" />  
   <Skeleton height="8em" />
 
-{:then participations }
+{:then _ }
   <section>
     <ul class="participants">
-      {#each participations as { address, partKeys } (address)}
-        <li class="participant">
+      {#each $participations as { address, partKeys } (address)}
+        <li class="participant" out:scale|local={{ duration: 480, opacity: 0, start: 0.9 }}>
           <h2 class="block-title">
             <span class="icon">
               <Icon name="user" /> 
@@ -69,10 +44,7 @@
     </ul>
   </section>
   
-  <GlobalEvent 
-    event="participations.refresh" 
-    callback={ getParticipationKeys }
-  />
+ 
 
 {:catch _}
   <ErrorCard code={ ErrorCode.API_NOT_RESPONDING } />

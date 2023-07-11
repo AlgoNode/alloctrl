@@ -56,6 +56,7 @@
   }
 </script>
 
+
 <article class="card" out:scale|local={{ duration: 480, opacity: 0, start: 0.9 }}>
   <header class="card-header">
     <div class="left">
