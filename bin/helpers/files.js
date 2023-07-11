@@ -7,10 +7,7 @@ import { existsSync } from 'node:fs';
 */
 export function getEnvPath() {
   const cwd = process.cwd();
-  const envLocations = [
-    '.env',
-    'alloctrl.env',
-  ];
+  const envLocations = [ 'alloctrl.env' ];
   let envPath = undefined;
   for ( let i=0; i< envLocations.length; i++ ) {
     if (existsSync(`${cwd}/${ envLocations[i]}`)) {
