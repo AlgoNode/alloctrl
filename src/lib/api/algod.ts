@@ -1,4 +1,4 @@
-import { PUBLIC_NODE_HOST } from "$env/static/public";
+import { env as publicEnv } from "$env/dynamic/public";
 import { Method } from "$lib/enums";
 import camelcaseKeys from "camelcase-keys";
 import axios from "axios";
@@ -17,7 +17,7 @@ export default abstract class AlgodApi {
       try {
         const response = await axios({
           method,
-          baseURL: PUBLIC_NODE_HOST,
+          baseURL: publicEnv.PUBLIC_ALGOD_HOST,
           url: endpoint,
           data,
         });

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_CHECK_VERSION_ON_GITHUB } from "$env/static/public";
+  import { env as publicEnv } from "$env/dynamic/public";
   import { envBool } from "$lib/helpers/env";
   import __ from "$lib/locales";
   import VersionCheck from "$components/blocks/dashboard/VersionCheck.svelte";
@@ -14,7 +14,7 @@
 </header>
 
 <div class="grid">
-  {#if envBool(PUBLIC_CHECK_VERSION_ON_GITHUB) }
+  {#if envBool(publicEnv.PUBLIC_CHECK_VERSION_ON_GITHUB) }
     <VersionCheck />
 
   {:else}

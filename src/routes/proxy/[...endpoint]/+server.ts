@@ -1,8 +1,7 @@
 import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
-import type { Payload } from '$lib/types';
 import { getApiError } from '$lib/helpers/errors';
-import { PUBLIC_NODE_HOST, PUBLIC_NODE_PORT } from "$env/static/public";
-import { SECRET_ALGOD_ADMIN_TOKEN } from "$env/static/private";
+import { env as publicEnv } from "$env/dynamic/public";
+import { env as privateEnv } from "$env/dynamic/private";
 import { json, error } from '@sveltejs/kit'; 
 import axios from 'axios';
 
@@ -19,12 +18,12 @@ const proxy = async (req: RequestEvent) => {
   try {
     const data = typeof body === 'string' ? Buffer.from(body, 'binary') : body
     const response = await axios({
-      baseURL: `${ PUBLIC_NODE_HOST }:${ PUBLIC_NODE_PORT }`,
+      baseURL: `http://${ publicEnv.PUBLIC_ALGOD_HOST }:${ publicEnv.PUBLIC_ALGOD_PORT }`,
       method,
       url: endpoint,
       data,
       headers: { 
-        'X-Algo-API-Token': SECRET_ALGOD_ADMIN_TOKEN ,
+        'X-Algo-API-Token': privateEnv.SECRET_ALGOD_ADMIN_TOKEN ,
         ...( data instanceof ReadableStream 
           ? { 'Content-Type': 'application/x-binary' }
           : {} 
@@ -39,8 +38,8 @@ const proxy = async (req: RequestEvent) => {
 }
 
 
-export const GET: RequestHandler<Payload> = proxy;
-export const POST: RequestHandler<Payload> = proxy;
-export const PUT: RequestHandler<Payload> = proxy;
-export const DELETE: RequestHandler<Payload> = proxy;
+export const GET: RequestHandler<Record<string, string>> = proxy;
+export const POST: RequestHandler<Record<string, string>> = proxy;
+export const PUT: RequestHandler<Record<string, string>> = proxy;
+export const DELETE: RequestHandler<Record<string, string>> = proxy;
 
