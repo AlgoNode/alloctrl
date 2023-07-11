@@ -1,4 +1,9 @@
 
+export type ParticipationsProps = {
+    address: string,
+    partKeys: ParticipationProps[],
+}[]
+
 
 export interface ParticipationProps {
   id: string
@@ -21,3 +26,4 @@ export interface ParticipationKeyProps {
   voteParticipationKey: string,
   stateProofKey: string,
 }
+
