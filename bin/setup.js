@@ -19,59 +19,60 @@ export async function setupEnvFile() {
   }
 
 
-  // copy the .env sample
+  // Copy the .env sample
   const baseDir = getBaseDir();
   const currentDir = process.cwd();
   const samplePath = `${ baseDir }/.env.example`
   const envPath = `${ currentDir }/alloctrl.env`;
   
-
-
-  // get the file content
+  // Get the file content
   let envContent = readFileSync(samplePath, 'utf-8');
-  const configs = await inquirer.prompt([
-    // Algod API
-    {
-      message: `
-  📡 Let's start by connecting to your node's REST API.
-  ${ chalk.reset(`Hit any key to start!`) }
-  `,
-      name: '_1',
-    },
-    {
-      message: `What HOST is your node's REST API listening to? 
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'PUBLIC_ALGOD_HOST',
-      default: '127.0.0.1',
-      type: 'input',
-    },
-    {
-      message: `What PORT is your node's REST API listening to? 
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'PUBLIC_ALGOD_PORT',
-      default: '8080',
-      type: 'input',
-    },
-    {
-      message: `What is your ALGOD API token?
-${ chalk.reset(
-`  You can find your token in <your data folder>/algod.admin.token
-  Note: Your token will never be exposed to the browser.`
-) }
-`,
-      name: 'SECRET_ALGOD_ADMIN_TOKEN',
-      type: 'input',
-    },
+  
+  // Prompt for configs
+  const algodConfigs = await promptAlgodConfigs();
+  const dashboardConfigs = await promptDashboardConfigs();
 
-    // Dashboard
+  
+  // Add content to env file
+  const configs = { ...algodConfigs, ...dashboardConfigs };
+  Object.entries(configs).forEach(([key, value]) => {
+    const varLine = new RegExp(`^${ key }=(.+)`, 'gm')
+    envContent = envContent.replace(varLine, `${ key }=${ value }` );
+  });
+
+
+  // Write file
+  console.log('');
+  console.log('Almost done...');
+  console.log('💾 Writing variables to your environment file...');
+  writeFileSync(envPath, envContent);
+  console.log('Done!');
+  console.log('');
+  
+  return envPath;
+}
+
+
+
+
+/**
+* Prompt for configs
+* ==================================================
+*/
+async function promptConfigs(prompts = []) {
+  const configs = await inquirer.prompt(prompts);
+  delete configs._;
+  return configs;
+}
+
+function promptDashboardConfigs() {
+  return promptConfigs([
     {
       message: `
   🖥️  Now let's configure your dashboard.
   ${ chalk.reset(`Hit any key to continue.`) }
   `,
-      name: '_2',
+      name: '_',
     },
     {
       message: `The HOST used to access the dashboard?
@@ -98,25 +99,43 @@ ${ chalk.reset(
       default: true,
     },
   ]);
-
-  // Remove temp messages
-  delete configs._1;
-  delete configs._2;
-
-  // Add content to env file
-  Object.entries(configs).forEach(([key, value]) => {
-    const varLine = new RegExp(`^${ key }=(.+)`, 'gm')
-    envContent = envContent.replace(varLine, `${ key }=${ value }` );
-  });
+}
 
 
-  // Write file
-  console.log('');
-  console.log('Almost done...');
-  console.log('💾 Writing variables to your environment file...');
-  writeFileSync(envPath, envContent);
-  console.log('Done!');
-  console.log('');
-  
-  return envPath;
+function promptAlgodConfigs() {
+  return promptConfigs([
+    {
+      message: `
+  📡 Let's start by connecting to your node's REST API.
+  ${ chalk.reset(`Hit any key to start!`) }
+  `,
+      name: '_1',
+    },
+    {
+      message: `What HOST is your node's REST API listening to? 
+  ${ chalk.reset(`(leave blank for default)`) }
+  `,
+      name: 'PUBLIC_ALGOD_HOST',
+      default: '127.0.0.1',
+      type: 'input',
+    },
+    {
+      message: `What PORT is your node's REST API listening to? 
+  ${ chalk.reset(`(leave blank for default)`) }
+  `,
+      name: 'PUBLIC_ALGOD_PORT',
+      default: '8080',
+      type: 'input',
+    },
+    {
+      message: `What is your ALGOD API token?
+  ${ chalk.reset(
+  `You can find your token in <your data folder>/algod.admin.token
+  Note: Your token will never be exposed to the browser.`
+  ) }
+  `,
+      name: 'SECRET_ALGOD_ADMIN_TOKEN',
+      type: 'input',
+    },
+  ]);
 }
