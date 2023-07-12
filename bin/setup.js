@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import chalk from 'chalk';
 import { getBaseDir, getEnvPath } from "./helpers/files.js";
-import { copyFileSync, readFileSync, unlinkSync, writeFileSync } from 'fs';
-import inquirer from "inquirer";
+import { readFileSync, writeFileSync } from 'fs';
+import { promptAlgodConfigs, promptDashboardConfigs } from "./helpers/promts.js";
 
 /**
 * Create a new env file 
@@ -42,100 +41,16 @@ export async function setupEnvFile() {
 
 
   // Write file
-  console.log('');
-  console.log('Almost done...');
-  console.log('💾 Writing variables to your environment file...');
+  console.log(`
+Almost done...
+💾 Writing variables to your environment file...
+`);
   writeFileSync(envPath, envContent);
-  console.log('Done!');
-  console.log('');
+  console.log(`
+Done!
+`);
   
   return envPath;
 }
 
 
-
-
-/**
-* Prompt for configs
-* ==================================================
-*/
-async function promptConfigs(prompts = []) {
-  const configs = await inquirer.prompt(prompts);
-  delete configs._;
-  return configs;
-}
-
-function promptDashboardConfigs() {
-  return promptConfigs([
-    {
-      message: `
-  🖥️  Now let's configure your dashboard.
-  ${ chalk.reset(`Hit any key to continue.`) }
-  `,
-      name: '_',
-    },
-    {
-      message: `The HOST used to access the dashboard?
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'HOST',
-      default: '127.0.0.1',
-      type: 'input',
-    },
-    {
-      message: `The PORT used to access the dashboard?
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'PORT',
-      default: '3333',
-      type: 'input',
-    },
-    {
-      message: `Allow the dashboard connect to GitHub to check the latest versions?
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'PUBLIC_CHECK_VERSION_ON_GITHUB',
-      type: 'confirm',
-      default: true,
-    },
-  ]);
-}
-
-
-function promptAlgodConfigs() {
-  return promptConfigs([
-    {
-      message: `
-  📡 Let's start by connecting to your node's REST API.
-  ${ chalk.reset(`Hit any key to start!`) }
-  `,
-      name: '_1',
-    },
-    {
-      message: `What HOST is your node's REST API listening to? 
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'PUBLIC_ALGOD_HOST',
-      default: '127.0.0.1',
-      type: 'input',
-    },
-    {
-      message: `What PORT is your node's REST API listening to? 
-  ${ chalk.reset(`(leave blank for default)`) }
-  `,
-      name: 'PUBLIC_ALGOD_PORT',
-      default: '8080',
-      type: 'input',
-    },
-    {
-      message: `What is your ALGOD API token?
-  ${ chalk.reset(
-  `You can find your token in <your data folder>/algod.admin.token
-  Note: Your token will never be exposed to the browser.`
-  ) }
-  `,
-      name: 'SECRET_ALGOD_ADMIN_TOKEN',
-      type: 'input',
-    },
-  ]);
-}

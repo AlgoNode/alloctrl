@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process';
-
 import { getBaseDir, getEnvPath } from './helpers/files.js';
 import dotenv from 'dotenv'
-import inquirer from 'inquirer';
+import { prompt } from './helpers/promts.js';
 
 
 /**
@@ -12,9 +11,10 @@ import inquirer from 'inquirer';
 */
 let envPath = getEnvPath()
 if (!envPath) {
-  const startSetup = await inquirer.prompt([
+  const startSetup = await prompt([
     {
-      message: 'No environment file found. \nWould you like to launch the setup process and create one?',
+      message: `No environment file found. 
+   Would you like to launch the setup process and create one?` ,
       name: 'confirmed',
       type: 'confirm',
     }
