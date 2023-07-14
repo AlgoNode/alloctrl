@@ -1,19 +1,17 @@
 import { existsSync, readFileSync } from 'fs';
 import { prompt } from '../helpers/prompt.js';
+import { getDockerCompose } from '../helpers/files.js';
 
 
 export async function getAlgodConfigsFromFiles() {
   const currentDir = process.cwd();
-  
   // Check for Algorun in the current folder (docker-compose file)
-  const dockerComposePath = `${ currentDir }/docker-compose.yml`;
-  const hasDockerCompose = existsSync(dockerComposePath);
-  if (hasDockerCompose) {
-    const dockerCompose = readFileSync(dockerComposePath, 'utf-8');
-    // make sure the node's data volume is linked in current directory 
-    const hasDataVolume = /\s*-\s*(\$\{PWD\}\/data\:\/algod\/data\/\:rw)/gm.test(dockerCompose);
-    if (hasDataVolume) return readDataFolder(`${ currentDir }/data`);
-  }
+  const dockerCompose = getDockerCompose(currentDir);
+  if (dockerCompose) {
+    let configs = readDataFolder(`${ currentDir }/data`);
+    configs = mergeDockerConfigs(configs, dockerCompose)
+    return configs;
+  } 
 
   let configs;
   while(!configs) {
@@ -25,14 +23,24 @@ export async function getAlgodConfigsFromFiles() {
       enableGoUpperDirectory: true,
     }])
     configs = readDataFolder('/'+dataDir.path);
-    if (!configs) console.log(`❌ This doesn't look like an Algorand Node data folder... Please select another one.`);
+    
+    if (!configs) {
+      console.log(`❌ This doesn't look like an Algorand Node data folder... Please select another one.`);
+      continue;
+    }
+    // Check for a docker-compose file (aka: Algorun)
+    const dockerCompose = getDockerCompose(dataDir.path);
+    if (dockerCompose) configs = mergeDockerConfigs(configs, dockerCompose)
   } 
   
   return configs;
 }
 
 
-
+/**
+* Read Algod configs from a given data folder
+* ==================================================
+*/
 function readDataFolder(dataPath) {
   if (!dataPath || !existsSync(`${ dataPath }/algod.admin.token`)) return; 
   const nodeConfigsRaw = readFileSync(`${ dataPath }/config.json`, 'utf-8');
@@ -45,4 +53,17 @@ function readDataFolder(dataPath) {
     PUBLIC_ALGOD_PORT: port,
     SECRET_ALGOD_ADMIN_TOKEN: token,
   };
+}
+
+/**
+* Get configs from docker-compose
+* ==================================================
+*/
+function mergeDockerConfigs(configs = {}, dockerComposeContent = '') {
+  // Check for algod mapped port
+  const dockerPortRegex = new RegExp(`\n\\s*-\\s(\\d+?):${ configs.PUBLIC_ALGOD_PORT }\n`, 'g');
+  const portMatched = dockerPortRegex.exec(dockerComposeContent);
+  if (portMatched[1]) configs.PUBLIC_ALGOD_PORT = portMatched[1];
+  
+  return configs;
 }
