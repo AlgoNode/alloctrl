@@ -1,6 +1,6 @@
 {
 	"name": "alloctrl",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"type": "module",
 	"license": "BSD-3-Clause",
 	"module": "./build/index.js",
@@ -49,6 +49,8 @@
 		"chalk": "^5.3.0",
 		"dotenv": "^16.3.1",
 		"inquirer": "^9.2.7",
+		"inquirer-directory": "^2.2.0",
+		"inquirer-file-tree-selection-prompt": "^2.0.5",
 		"lodash-es": "^4.17.21",
 		"svelte": "^3.56.0",
 		"svelte-check": "^2.7.1",
