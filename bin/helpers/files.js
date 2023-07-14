@@ -1,6 +1,6 @@
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { existsSync } from 'node:fs';
+import { existsSync } from 'fs';
 /**
 * Check  for env file in possible locations
 * ==================================================
@@ -29,3 +29,5 @@ export function getBaseDir() {
   const baseDir = resolve( dirname(currentDir + '/../../..') );
   return baseDir
 }
+
+
