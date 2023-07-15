@@ -101,7 +101,6 @@ export default abstract class AlgodApi {
   * ==================================================
   */
   private static handleError(e: unknown) {
-    console.log('ERROR', e);
     return { error: true, data: e }
   }
 }

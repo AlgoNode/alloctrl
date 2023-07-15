@@ -1,12 +1,29 @@
 <script lang="ts">
   import { round } from 'lodash-es';
+  import { NodeState } from '$lib/enums';
+  import __ from '$lib/locales';
   import status from '$lib/stores/status';
   import Spinner from '$components/elements/Spinner.svelte';
+  $: console.log($status)
 </script>
 
 
-{#if $status}
-  <div class="status">
+<div class="status">
+  {#if $status.state === NodeState.LOADING }
+    <Spinner />
+
+
+  {:else if $status.state === NodeState.OFFLINE }
+    <span class="info error">
+      { __('status.isOffline') } 
+    </span>
+
+  {:else if $status.state === NodeState.CATCHING_UP }
+    <span class="info error">
+      { __('status.isCatchingUp') } 
+    </span>
+
+  {:else if $status.state === NodeState.READY }
     {#if $status.version }
       <span class="info">
         { $status.version } 
@@ -26,11 +43,9 @@
     {:else}
       <Spinner />
     {/if }
-  </div>
-
-{:else }
-  <div></div>
-{/if}
+    
+  {/if}
+</div>
 
 <style lang="scss">
   .status {

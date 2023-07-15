@@ -4,6 +4,8 @@ import type { Readable } from "svelte/store";
 import { readable, get } from "svelte/store";
 import { browser } from "$app/environment";
 import AlgodApi from "$lib/api/algod";
+import { NodeState } from "$lib/enums";
+import { parseMetricsResponse } from "$lib/helpers/responses";
 /**
 * Component lifecycle
 * ==================================================
@@ -16,6 +18,7 @@ let started: boolean = false;
  * ==================================================
  */
 const status: Readable<StatusProps> = readable({
+  state: NodeState.OFFLINE,
   version: undefined,
   lastRound: undefined,
   lastTimestamp: undefined,
@@ -30,9 +33,7 @@ const status: Readable<StatusProps> = readable({
 */
 function start(set: SetStatusCallback) {
   if (!browser || started) return;
-  started = true;
   init(set);
-  update(set);
   return stop;
 }
 function stop() {
@@ -41,15 +42,76 @@ function stop() {
 }
 
 /**
-* Get the initial state
+* Init the store
 * ==================================================
 */
 async function init(set: SetStatusCallback) {
-  const [statusResponse, versionsResponse] = await Promise.all([
-    AlgodApi.private.get('/v2/status') as Promise<NodeStatusResponse>,
-    AlgodApi.private.get('/versions') as Promise<Version>,
-  ]);
-  if (!started) return; // dirty fix for HMR initializing store multiple times.
+  if (started) return;
+  started = true;
+  try {
+    set({ ...get(status), state: NodeState.OFFLINE });
+    await waitForOnline();
+    set({ ...get(status), state: NodeState.CATCHING_UP });
+    await waitForCatchup();
+    set({ ...get(status), state: NodeState.READY });
+    await waitForInitialState(set);
+    waitForNewRound(set);
+  }
+  catch (e) {
+    // try initiating again
+    updateTimeout = setTimeout( () => init(set), 5000 );
+  }
+}
+
+
+
+/**
+* Check if node is online
+* throws an unknown error when offline 
+* https://developer.algorand.org/docs/rest-apis/algod/#get-health
+* ==================================================
+*/
+function waitForOnline() {
+  return new Promise((resolve) => checkIfOnline(resolve));
+}
+async function checkIfOnline(resolve: (...args: unknown[]) => void) {
+  try { 
+    await AlgodApi.private.get('/health');
+    resolve();
+  }
+  catch {
+    updateTimeout = setTimeout( () => checkIfOnline(resolve), 5000 );
+  }
+}
+
+
+/**
+* Check if node is ready (caught up)
+* throws an error 503 when catching up 
+* https://developer.algorand.org/docs/rest-apis/algod/#get-ready
+* ==================================================
+*/
+function waitForCatchup() {
+  return new Promise((resolve) => checkIfReady(resolve))
+}
+async function checkIfReady(resolve: (...args: unknown[]) => void) {
+  try { 
+    await AlgodApi.private.get('/ready'); 
+    resolve();
+  }
+  catch {
+    updateTimeout = setTimeout( () => checkIfReady(resolve), 3000 );
+  }
+}
+
+
+/**
+* Check for initial state
+* ==================================================
+*/
+async function waitForInitialState(set: SetStatusCallback) {
+  const statusResponse = await AlgodApi.private.get('/v2/status') as NodeStatusResponse;
+  const versionsResponse = await AlgodApi.private.get('/versions') as Version;
   const { build } = versionsResponse;
   set({ 
     ...get(status), 
@@ -59,22 +121,19 @@ async function init(set: SetStatusCallback) {
 }
 
 
+
 /**
 * Update the store every block
 * Use a timeout before "round" is set (from init function)
 * Use "wait-for-block-after" once "round" is set
 * ==================================================
 */
-async function update(set: SetStatusCallback) {
+async function waitForNewRound(set: SetStatusCallback) {
   let { lastRound, lastTimestamp, averageBlockTime, blockTime, sampleSize } = get(status);
-  if (!lastRound) {
-    updateTimeout = setTimeout( () => update(set), 1000 );
-    return;
-  }
-
   const statusResponse = await AlgodApi.private.get(`/v2/status/wait-for-block-after/${lastRound}`) as NodeStatusResponse;
   if (!started) return; // dirty fix for HMR initializing store multiple times.
   const currentTimestamp = getBlockTimestamp(statusResponse);
+
   lastRound = Number(statusResponse.lastRound);
   if (lastTimestamp) {
     blockTime = (currentTimestamp - lastTimestamp) / 1000;
@@ -89,13 +148,13 @@ async function update(set: SetStatusCallback) {
     averageBlockTime,
     sampleSize,
   });
-  update(set);
+  waitForNewRound(set);
 }
 
 
 
 /**
-* Get a block timestamp based on a stattus response
+* Get a block timestamp based on a status response
 * ==================================================
 */
 function getBlockTimestamp(statusResponse: NodeStatusResponse) {
