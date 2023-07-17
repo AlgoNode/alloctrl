@@ -74,7 +74,7 @@
 <section class="card">
   <h2 class="card-title card-header">
     <Icon name="sync" />
-    { __('status.catchingUp') }
+    { __('status.catchingUpTitle') }
   </h2>
 
   <div class="card-content">

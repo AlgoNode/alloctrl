@@ -1,7 +1,7 @@
 <script lang="ts">
-  
+  import __ from "$lib/locales";
+  import ErrorCard from "$components/elements/ErrorCard.svelte";
 </script>
 
-<style lang="scss">
-  
-</style>
+<ErrorCard message={ __('status.offlineTitle') } />
+

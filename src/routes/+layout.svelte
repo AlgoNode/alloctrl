@@ -8,6 +8,7 @@
 	import TopBar from '$components/layout/TopBar.svelte';
 	import status from '$lib/stores/status';
 	import CatchingUp from '$components/blocks/status/CatchingUp.svelte';
+	import Offline from '$components/blocks/status/Offline.svelte';
 	
 	/**
 	* Profile
@@ -42,7 +43,10 @@
 		<TopBar />
 		<main>
 			
-			{#if $status.state === NodeState.CATCHING_UP }
+			{#if $status.state === NodeState.OFFLINE }
+				<Offline />
+
+			{:else if $status.state === NodeState.CATCHING_UP }
 				<CatchingUp />
 			
 			{:else if $status.state === NodeState.READY }
