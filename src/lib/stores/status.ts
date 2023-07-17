@@ -3,9 +3,8 @@ import type { SetStatusCallback, StatusProps } from "./types";
 import type { Readable } from "svelte/store";
 import { readable, get } from "svelte/store";
 import { browser } from "$app/environment";
-import AlgodApi from "$lib/api/algod";
 import { NodeState } from "$lib/enums";
-import { parseMetricsResponse } from "$lib/helpers/responses";
+import AlgodApi from "$lib/api/algod";
 /**
 * Component lifecycle
 * ==================================================
@@ -100,7 +99,7 @@ async function checkIfReady(resolve: (...args: unknown[]) => void) {
     resolve();
   }
   catch {
-    updateTimeout = setTimeout( () => checkIfReady(resolve), 3000 );
+    updateTimeout = setTimeout( () => checkIfReady(resolve), 30000 );
   }
 }
 
@@ -129,6 +128,7 @@ async function waitForInitialState(set: SetStatusCallback) {
 * ==================================================
 */
 async function waitForNewRound(set: SetStatusCallback) {
+  if (updateTimeout) clearTimeout(updateTimeout);
   let { lastRound, lastTimestamp, averageBlockTime, blockTime, sampleSize } = get(status);
   const statusResponse = await AlgodApi.private.get(`/v2/status/wait-for-block-after/${lastRound}`) as NodeStatusResponse;
   if (!started) return; // dirty fix for HMR initializing store multiple times.

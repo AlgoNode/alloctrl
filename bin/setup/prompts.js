@@ -143,7 +143,7 @@ export function promptFeaturesConfigs() {
       message: `Allow external API calls to fetch statistics about your node?
         ${ chalk.reset(`(default: Yes)`) }
       `,
-      name: 'PUBLIC_ALLOW_EXTERNAL_API',
+      name: 'PUBLIC_ALLOW_EXTERNAL_APIS',
       type: 'confirm',
       default: true,
     },

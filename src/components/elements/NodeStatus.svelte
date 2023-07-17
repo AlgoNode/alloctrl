@@ -4,7 +4,6 @@
   import __ from '$lib/locales';
   import status from '$lib/stores/status';
   import Spinner from '$components/elements/Spinner.svelte';
-  $: console.log($status)
 </script>
 
 

@@ -6,6 +6,8 @@ import pera from '$assets/logos/pera.svg?raw';
 import discord from '$fa/brands/discord.svg?raw';
 import twitter from '$fa/brands/twitter.svg?raw';
 
+
+import arrowsRotate from '$fa/solid/arrows-rotate.svg?raw';
 import chartNetwork from '$fa/solid/globe.svg?raw';
 import circleCheck from '$fa/solid/circle-check.svg?raw';
 import chevronRight from '$fa/solid/chevron-right.svg?raw';
@@ -44,6 +46,7 @@ const list: Record<string, string> = {
   select: sort,
   sort,
   sun,
+  sync: arrowsRotate,
   user,
   vote: squareCheck,
   warning: triangleExclamation,
