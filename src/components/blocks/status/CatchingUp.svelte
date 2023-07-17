@@ -10,8 +10,8 @@
   import axios from "axios";
   import Icon from "$components/icons/Icon.svelte";
   
-  let localInterval: NodeJS.Timeout;
-  let remoteInterval: NodeJS.Timeout;
+  let localTimeout: NodeJS.Timeout;
+  let remoteTimeout: NodeJS.Timeout;
 
   const catchup = writable({
     currentRound: 0,
@@ -20,8 +20,8 @@
   
   onDestroy(destroy);
   function destroy() {
-    if (localInterval) clearTimeout(localInterval);
-    if (remoteInterval) clearTimeout(remoteInterval);
+    if (localTimeout) clearTimeout(localTimeout);
+    if (remoteTimeout) clearTimeout(remoteTimeout);
   }
   
   onMount(init);
@@ -36,7 +36,7 @@
   * ==================================================
   */
   async function getLocalSyncedCount() {
-    if (localInterval) clearTimeout(localInterval);
+    if (localTimeout) clearTimeout(localTimeout);
     try {
       const response = await AlgodApi.private.get('/metrics') as string;
       const metrics = parseMetricsResponse(response);
@@ -44,9 +44,9 @@
         ...$catchup,
         currentRound: metrics.algod_ledger_round,
       }))
+      localTimeout = setTimeout(getLocalSyncedCount, 2000);
     }
     catch {}
-    localInterval = setTimeout(getLocalSyncedCount, 2000);
   }
 
   /**
@@ -55,7 +55,7 @@
   * ==================================================
   */
   async function getRemoteBlockCount() {
-    if (remoteInterval) clearTimeout(remoteInterval);
+    if (remoteTimeout) clearTimeout(remoteTimeout);
     try {
       const { data: status } = await axios.get('https://mainnet-api.algonode.cloud/v2/status');
       catchup.update($catchup => ({
@@ -64,7 +64,7 @@
       }))
     }
     catch {}
-    remoteInterval = setTimeout(getRemoteBlockCount, 30000);
+    remoteTimeout = setTimeout(getRemoteBlockCount, 30000);
   }
 </script>
 
