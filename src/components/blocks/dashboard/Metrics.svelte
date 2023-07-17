@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ErrorCode, PropType, Sizes } from "$lib/enums";
+  import { parseMetricsResponse } from "$lib/helpers/responses";
   import __ from "$lib/locales";
   import ErrorCard from "$components/elements/ErrorCard.svelte";
   import Skeleton from "$components/elements/Skeleton.svelte";
@@ -7,20 +8,8 @@
   import Prop from "$components/elements/Prop.svelte";
 
   async function init() {
-    const metrics: Record<string, number> = {};
     const response = await AlgodApi.private.get('/metrics') as string;
-    response
-      .replace(/^#.+/gm, '') // remove comments
-      .replace(/\n+/g, '\n') // merge multiple new lines
-      .replace(/^\n/g, '') // remove empty new line
-      .replace(/{}/g, '') // remove curly braces
-      .split('\n')
-      .forEach((str: string) => {
-        const [key, value] = str.split(' ');
-        
-        metrics[key] = Number(value);
-      });
-
+    const metrics = parseMetricsResponse(response);
     return metrics
   }
 </script>

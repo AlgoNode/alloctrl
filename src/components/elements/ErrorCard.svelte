@@ -1,9 +1,10 @@
 <script lang="ts">
-    import Icon from "$components/icons/Icon.svelte";
+  import Icon from "$components/icons/Icon.svelte";
   import { ErrorCode } from "$lib/enums";
   import __ from "$lib/locales";
   export let code: ErrorCode|undefined = undefined;
-  export let message: string|undefined = undefined; 
+  export let message: string|undefined = undefined;
+  console.log(message) 
     
   const content = message 
     ? message 

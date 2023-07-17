@@ -5,6 +5,7 @@ import forms from './forms';
 import metrics from './metrics';
 import nav from './nav';
 import participation from './participation';
+import status from './status';
 import ui from './ui';
 import versions from './versions';
 import wallet from './wallet';
@@ -21,6 +22,7 @@ export const strings = {
   metrics,
   nav,
   participation,
+  status,
   ui,
   versions,
   wallet,
