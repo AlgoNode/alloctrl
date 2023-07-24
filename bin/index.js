@@ -30,6 +30,7 @@ if (!envPath) {
   await setupEnvFile();
 }
 
+
 /**
 * Load the env files
 * ==================================================

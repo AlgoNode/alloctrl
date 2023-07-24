@@ -43,11 +43,15 @@ export async function getAlgodConfigsFromFiles() {
 */
 function readDataFolder(dataPath) {
   if (!dataPath || !existsSync(`${ dataPath }/algod.admin.token`)) return; 
+  const token = readFileSync(`${ dataPath }/algod.admin.token`, 'utf-8');
+
+  if (!existsSync(`${ dataPath }/config.json`)) {
+    return { SECRET_ALGOD_ADMIN_TOKEN: token };
+  }
+  
   const nodeConfigsRaw = readFileSync(`${ dataPath }/config.json`, 'utf-8');
   const nodeConfigs = JSON.parse(nodeConfigsRaw);
   const [ host, port ] = nodeConfigs.EndpointAddress.split(':');
-  const token = readFileSync(`${ dataPath }/algod.admin.token`, 'utf-8');
-
   return {
     PUBLIC_ALGOD_HOST: host,
     PUBLIC_ALGOD_PORT: port,
