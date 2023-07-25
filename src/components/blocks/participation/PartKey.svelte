@@ -80,13 +80,21 @@
           
         {/if}
 
-        {#if partKey.online}
-          <Tag 
-            label={ __('participation.online.status') }
-            style={ Styles.GRAY }
-            size={ Sizes.TINY } 
-          />
-        {/if}
+        
+        <Tag 
+          label={ 
+            partKey.online 
+              ? __('participation.online.status')
+              :__('participation.offline.status') 
+          }
+          style={
+            partKey.online
+              ? Styles.PRIMARY
+              : Styles.GRAY 
+          }
+          size={ Sizes.TINY } 
+        />
+    
       </div>
     </div>
 
