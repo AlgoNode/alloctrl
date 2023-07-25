@@ -50,7 +50,11 @@
         <!-- Divide the number of vote messages by the number of peers to get the actual vote count -->
         <Prop 
           label={ __('metrics.votesSent') }
-          value={ Math.ceil(metrics.algod_network_message_sent_AV / metrics.algod_network_outgoing_peers) }
+          value={
+            metrics.algod_network_message_sent_AV 
+              ? Math.ceil(metrics.algod_network_message_sent_AV / metrics.algod_network_outgoing_peers)
+              : undefined
+          }
           icon="vote"
           type={ PropType.AMOUNT }
           size={ Sizes.LARGE } 
