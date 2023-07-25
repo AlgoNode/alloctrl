@@ -1,33 +1,49 @@
 #!/usr/bin/env node
-import { getBaseDir, getEnvPath } from './helpers/files.js';
-import { prompt } from './helpers/prompt.js';
 import { spawn } from 'child_process';
+import { existsSync, unlinkSync } from 'fs';
+import { getBaseDir, getEnvPath } from './helpers/files.js';
+import { setupEnvFile } from './setup/index.js';
+import { confirmNewSetup, confirmRestartSetup } from './setup/prompts.js';
+
 import dotenv from 'dotenv'
+
+let envPath = getEnvPath()
+
+/**
+* Parse command arguments
+* ==================================================
+*/
+const arg = process.argv[2];
+if (arg) {
+  switch (arg) {
+
+    // Restart setup
+    case 'setup':
+      await confirmRestartSetup();
+      if (envPath) unlinkSync(envPath);
+      await setupEnvFile();
+      envPath = getEnvPath();
+      break;
+
+    // Check if arg is an env file
+    default:
+      if (existsSync(`${ process.cwd() }/${ arg }`)) {
+        envPath = `${ process.cwd() }/${ arg }`;
+        console.log('path', envPath)
+      }
+      break;
+  }
+}
 
 
 /**
-* Get the env file
+* Setup new env file
 * ==================================================
 */
-let envPath = getEnvPath()
 if (!envPath) {
-  const startSetup = await prompt([
-    {
-      prefix: '⚠️ ',
-      message: `No environment file found. 
-        Would you like to launch the setup process and create one?` ,
-      name: 'confirmed',
-      type: 'confirm',
-    }
-  ]);
-  if (!startSetup.confirmed){
-    console.log('👋 Alright then. See you later!');
-    process.exit(1);
-  }
-
-  // No env, start setup process
-  const { setupEnvFile } = await import('./setup/index.js');
+  await confirmNewSetup();
   await setupEnvFile();
+  envPath = getEnvPath()
 }
 
 
@@ -35,7 +51,6 @@ if (!envPath) {
 * Load the env files
 * ==================================================
 */
-envPath = getEnvPath()
 if (!envPath) {
   console.log(`❌ Could not load the environment file. Aborting.`);
   process.exit(1);
