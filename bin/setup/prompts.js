@@ -3,6 +3,47 @@ import { PROMPT_MESSAGE_KEY, prompt } from "../helpers/prompt.js";
 import chalk from 'chalk';
 
 
+/**
+* Confirm setup
+* ==================================================
+*/
+export async function confirmNewSetup() {
+  const startSetup = await prompt([
+    {
+      prefix: '⚠️ ',
+      message: `No environment file found. 
+        Would you like to launch the setup process and create one?` ,
+      name: 'confirmed',
+      type: 'confirm',
+    }
+  ]);
+  if (!startSetup.confirmed){
+    console.log('👋 Alright then. See you later!');
+    process.exit(1);
+  }
+}
+
+/**
+* Confirm setup
+* ==================================================
+*/
+export async function confirmRestartSetup() {
+  const startSetup = await prompt([
+    {
+      prefix: '⚠️ ',
+      message: `You're about to restart the setup process. 
+        Do you want to delete the current environment file and create a new one?` ,
+      name: 'confirmed',
+      type: 'confirm',
+    }
+  ]);
+  if (!startSetup.confirmed){
+    console.log('👋 Alright then. See you later!');
+    process.exit(1);
+  }
+}
+
+
 
 /**
 * Manual/ Auto setups

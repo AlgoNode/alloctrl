@@ -67,7 +67,7 @@ function mergeDockerConfigs(configs = {}, dockerComposeContent = '') {
   // Check for algod mapped port
   const dockerPortRegex = new RegExp(`\n\\s*-\\s(\\d+?):${ configs.PUBLIC_ALGOD_PORT }\n`, 'g');
   const portMatched = dockerPortRegex.exec(dockerComposeContent);
-  if (portMatched[1]) configs.PUBLIC_ALGOD_PORT = portMatched[1];
+  if (portMatched && portMatched[1]) configs.PUBLIC_ALGOD_PORT = portMatched[1];
   
   return configs;
 }
