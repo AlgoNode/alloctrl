@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'fs';
 import { prompt } from '../helpers/prompt.js';
 import { getDockerCompose } from '../helpers/files.js';
+import path from 'path';
 
 
 export async function getAlgodConfigsFromFiles() {
@@ -8,7 +9,8 @@ export async function getAlgodConfigsFromFiles() {
   // Check for Algorun in the current folder (docker-compose file)
   const dockerCompose = getDockerCompose(currentDir);
   if (dockerCompose) {
-    let configs = readDataFolder(`${ currentDir }/data`);
+    const configPath = path.join(currentDir, 'data');
+    let configs = readDataFolder(configPath);
     configs = mergeDockerConfigs(configs, dockerCompose)
     return configs;
   } 
@@ -22,7 +24,8 @@ export async function getAlgodConfigsFromFiles() {
       onlyShowDir: true,
       enableGoUpperDirectory: true,
     }])
-    configs = readDataFolder('/'+dataDir.path);
+    console.log(dataDir)
+    configs = readDataFolder(dataDir.path);
     
     if (!configs) {
       console.log(`❌ This doesn't look like an Algorand Node data folder... Please select another one.`);
@@ -42,19 +45,21 @@ export async function getAlgodConfigsFromFiles() {
 * ==================================================
 */
 function readDataFolder(dataPath) {
-  if (!dataPath || !existsSync(`${ dataPath }/algod.admin.token`)) return; 
-  const token = readFileSync(`${ dataPath }/algod.admin.token`, 'utf-8');
+  if (!dataPath) return;
+  const tokenPath = path.join(dataPath, 'algod.admin.token');
+  const token = existsSync(tokenPath) && readFileSync(tokenPath, 'utf-8');
+  if (!token) return;
 
-  if (!existsSync(`${ dataPath }/config.json`)) {
+  const configPath = path.join(dataPath, 'config.json');
+  if (!existsSync(configPath)) 
     return { SECRET_ALGOD_ADMIN_TOKEN: token };
-  }
   
-  const nodeConfigsRaw = readFileSync(`${ dataPath }/config.json`, 'utf-8');
+  const nodeConfigsRaw = readFileSync(configPath, 'utf-8');
   const nodeConfigs = JSON.parse(nodeConfigsRaw);
   const [ host, port ] = nodeConfigs.EndpointAddress.split(':');
   return {
     PUBLIC_ALGOD_HOST: host,
-    PUBLIC_ALGOD_PORT: port,
+    PUBLIC_ALGOD_PORT: Number(port) ? port : '8080',
     SECRET_ALGOD_ADMIN_TOKEN: token,
   };
 }
