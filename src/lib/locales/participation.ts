@@ -74,7 +74,7 @@ const strings: LocaleDictionnary =  {
       info: 'Duration (rounds) for which the partkey will be valid'
     },
     dilution: {
-      label: 'Key Diluion',
+      label: 'Key Dilution',
       info: 'Key dilution for two-level participation keys (defaults to sqrt of validity window)',
     },
   }
