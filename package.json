@@ -1,9 +1,12 @@
 {
 	"name": "alloctrl",
+	"description": "Algorand Node Controller",
+	"author": "AlgoNode",
 	"version": "0.1.9",
 	"type": "module",
 	"license": "BSD-3-Clause",
 	"module": "./build/index.js",
+	"main": "./main.cjs",
 	"files": [
 		"/build",
 		"/bin",
@@ -17,7 +20,9 @@
 	},
 	"scripts": {
 		"dev": "vite dev",
+		"dev:desktop": "cross-env PORT=3333 concurrently -n ui,desktop \"npm:dev\" \"wait-on http://localhost:3333 && electron .\"",
 		"build": "vite build",
+		"build:desktop": "electron-forge make",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
@@ -26,6 +31,12 @@
 		"start": "node -r dotenv/config ./build"
 	},
 	"devDependencies": {
+		"@electron-forge/cli": "^6.2.1",
+		"@electron-forge/maker-deb": "^6.2.1",
+		"@electron-forge/maker-rpm": "^6.2.1",
+		"@electron-forge/maker-squirrel": "^6.2.1",
+		"@electron-forge/maker-zip": "^6.2.1",
+		"@electron-forge/plugin-auto-unpack-natives": "^6.2.1",
 		"@fortawesome/fontawesome-free": "^6.4.0",
 		"@sveltejs/adapter-node": "^1.2.4",
 		"@sveltejs/kit": "^1.20.1",
@@ -34,12 +45,18 @@
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"algosdk": "^2.4.0",
+		"alloctrl": "^0.1.9",
+		"concurrently": "^8.2.0",
+		"cross-env": "^7.0.3",
+		"electron": "^25.3.2",
+		"electron-squirrel-startup": "^1.0.0",
 		"eslint": "^8.16.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"sass": "^1.54.4",
 		"tslib": "^2.6.0",
 		"typescript": "^5.1.5",
-		"vite": "^4.3.9"
+		"vite": "^4.3.9",
+		"wait-on": "^7.0.1"
 	},
 	"dependencies": {
 		"algostack": "^0.4.13",
