@@ -2,7 +2,11 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import path from 'path';
 
 const config = {
-	plugins: [  
+    server: {
+        port: process.env.PORT || 3000,
+        host: process.env.HOST || 'localhost'
+    },
+	plugins: [
 		sveltekit(),
 	],
 	resolve: {
@@ -13,7 +17,7 @@ const config = {
 			$fa: '@fortawesome/fontawesome-free/svgs',
 		},
 	},
-	
+
 	ssr: {
 		external: ['algostack'],
 	},
