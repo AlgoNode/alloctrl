@@ -4,9 +4,8 @@ import camelcaseKeys from "camelcase-keys";
 import axios from "axios";
 import algostack from "./algostack.public";
 
-
 export default abstract class AlgodApi {
-
+  
   /**
   * FETCH PUBLIC API
   * ==================================================

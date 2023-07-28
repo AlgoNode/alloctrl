@@ -7,6 +7,15 @@ import axios from 'axios';
 import type { Payload } from '$lib/types';
 
 /**
+* Intercept errors 
+* ==================================================
+*/
+axios.interceptors.response.use(
+  response => response, 
+  error => Promise.reject( error.errno > 0 ? error : undefined)
+);
+
+/**
 * Proxy
 * ==================================================
 */

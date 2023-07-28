@@ -4,7 +4,6 @@
   import __ from "$lib/locales";
   export let code: ErrorCode|undefined = undefined;
   export let message: string|undefined = undefined;
-  console.log(message) 
     
   const content = message 
     ? message 

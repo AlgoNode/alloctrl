@@ -57,7 +57,6 @@ async function init(set: SetStatusCallback) {
     waitForNewRound(set);
   }
   catch (e) {
-    // try initiating again
     updateTimeout = setTimeout( () => init(set), 5000 );
   }
 }
@@ -78,7 +77,8 @@ async function checkIfOnline(resolve: (...args: unknown[]) => void) {
     await AlgodApi.private.get('/health');
     resolve();
   }
-  catch {
+  catch (e) {
+    console.log('error connecting to node')
     updateTimeout = setTimeout( () => checkIfOnline(resolve), 5000 );
   }
 }
@@ -98,7 +98,8 @@ async function checkIfReady(resolve: (...args: unknown[]) => void) {
     await AlgodApi.private.get('/ready'); 
     resolve();
   }
-  catch {
+  catch (e) {
+    console.log('error catching up', e)
     updateTimeout = setTimeout( () => checkIfReady(resolve), 30000 );
   }
 }
@@ -137,6 +138,7 @@ async function waitForNewRound(set: SetStatusCallback) {
   lastRound = Number(statusResponse.lastRound);
   if (lastTimestamp) {
     blockTime = (currentTimestamp - lastTimestamp) / 1000;
+    if (blockTime < 100) return set({ ...get(status), state: NodeState.CATCHING_UP });
     averageBlockTime = ((averageBlockTime * sampleSize) + blockTime) / ++sampleSize;
   }
   lastTimestamp = currentTimestamp;
